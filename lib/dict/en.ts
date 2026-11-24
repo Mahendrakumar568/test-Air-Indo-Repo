@@ -260,6 +260,15 @@ const en = {
     notifyTitle: "Want to fly this route?",
     notifyLead: "Join the waitlist for this city and we'll tell you the moment booking opens.",
     nonstop: "Non-stop",
+    cine: {
+      hint: "Scroll to fly the network",
+      network: "The network",
+      total: "Total distance",
+      time: "Flying time",
+      cities: "Cities",
+      explore: "Explore",
+      step: "Go to",
+    },
   },
   about: {
     kicker: "Our story",

@@ -5,7 +5,7 @@ import { isLocale } from "@/lib/i18n";
 import { cityList, connectionsOf } from "@/lib/data";
 import { PageHero } from "@/components/PageHero";
 import { Img } from "@/components/Img";
-import { RouteNetwork } from "@/components/RouteNetwork";
+import { CinematicNetwork } from "@/components/CinematicNetwork";
 import { RouteExplorer } from "@/components/RouteExplorer";
 
 export async function generateMetadata({ params }: PageProps) {
@@ -19,22 +19,18 @@ export default async function Routes({ params }: PageProps) {
   return (
     <>
       <PageHero kicker={r.kicker} title={r.title} lead={r.lead} image="heroAlt" />
-      <section className="section bg-white">
-        <div className="wrap">
-          <RouteNetwork
-            locale={locale}
-            names={names}
-            corridorText={t.corridors}
-            linkCities={false}
-            labels={{ corridor: r.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes }}
-          />
-        </div>
-      </section>
+      <CinematicNetwork
+        locale={locale}
+        names={names}
+        corridorText={t.corridors}
+        intro={{ kicker: t.home.networkKicker, title: t.home.networkTitle, lead: t.home.networkLead, id: "network-title" }}
+        labels={{ corridor: r.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes, ...r.cine }}
+      />
       <section className="section bg-ivory">
         <div className="wrap">
           <div className="head reveal" style={{ marginBottom: 48 }}>
             <span className="kicker">{r.destinationsTitle}</span>
-            <h2 className="h2">{t.home.networkTitle}</h2>
+            <h2 className="h2">{t.routes.title}</h2>
           </div>
           <div className="grid g3">
             {cityList.map((c) => (

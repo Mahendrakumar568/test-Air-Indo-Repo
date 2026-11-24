@@ -5,7 +5,7 @@ import { isLocale } from "@/lib/i18n";
 import { cityList } from "@/lib/data";
 import { Img } from "@/components/Img";
 import { Icon, type IconName } from "@/components/Icon";
-import { RouteNetwork } from "@/components/RouteNetwork";
+import { CinematicNetwork } from "@/components/CinematicNetwork";
 import { RouteExplorer } from "@/components/RouteExplorer";
 import { Timeline } from "@/components/Timeline";
 import { FlightLines } from "@/components/FlightLines";
@@ -54,23 +54,13 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Network */}
-      <section className="section bg-white" aria-labelledby="network-title">
-        <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 48 }}>
-            <span className="kicker">{h.networkKicker}</span>
-            <h2 id="network-title" className="h2">{h.networkTitle}</h2>
-            <p className="lead">{h.networkLead}</p>
-          </div>
-          <div className="reveal">
-            <RouteNetwork
-              locale={locale}
-              names={names}
-              corridorText={t.corridors}
-              labels={{ corridor: t.routes.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes }}
-            />
-          </div>
-        </div>
-      </section>
+      <CinematicNetwork
+        locale={locale}
+        names={names}
+        corridorText={t.corridors}
+        intro={{ kicker: h.networkKicker, title: h.networkTitle, lead: h.networkLead, id: "network-title" }}
+        labels={{ corridor: t.routes.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes, ...t.routes.cine }}
+      />
 
       {/* Destinations */}
       <section className="section-sm bg-ivory" aria-labelledby="dest-title">
