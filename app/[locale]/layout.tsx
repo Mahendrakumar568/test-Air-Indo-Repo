@@ -64,7 +64,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <div className="statusbar">
           <div className="wrap">
             <span className="pulse" aria-hidden="true" />
-            <span>{t.status.text}</span>
+            <span className="status-long">{t.status.text}</span>
+            <span className="status-short">{t.status.short}</span>
             <a href={`/${locale}#progress`}>{t.status.link} →</a>
           </div>
         </div>

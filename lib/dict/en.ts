@@ -37,6 +37,7 @@ const en = {
     primary: "Main navigation",
   },
   status: {
+    short: "Pre-launch · DGCA approval in progress",
     text: "Pre-launch. Initial NOC from MoCA and MHA security clearance received. DGCA approval in progress.",
     link: "See our progress",
   },
