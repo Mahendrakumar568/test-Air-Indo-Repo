@@ -103,7 +103,7 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
     PNQ: {
       craft: { name: "Paithani silk", line: "Silk sarees with gold zari borders and peacock pallus, woven by hand the same way for centuries.", also: "Also: the Puneri pagadi" },
       food: { name: "Misal pav", line: "Sprouted moth curry under a spicy tarri, farsan for crunch and soft pav. Pune takes it seriously." },
-      word: { script: "काय म्हणता?", roman: "Kaay mhanta?", meaning: "How's it going?, in Marathi" },
+      word: { script: "काय म्हणता?", roman: "Kaay mhanta?", meaning: "Marathi for \"how's it going?\"" },
       places: [
         { name: "Sinhagad Fort", line: "A Maratha hill fort, best on a monsoon morning with pithla bhakri at the top." },
         { name: "Shaniwar Wada", line: "The 1732 Peshwa palace at the heart of the old peths." },
