@@ -29,22 +29,22 @@ export const motifOf: Record<CityCode, Motif> = { VTZ: "waves", VGA: "dots", HYD
 
 export const cultureLabels: Record<Locale, {
   kicker: string; title: string; craft: string; food: string; word: string; nearby: string;
-  inCity: string; km: string; fly: string; notify: string;
+  inCity: string; km: string; fly: string; notify: string; skip: string;
 }> = {
   en: {
     kicker: "Rooted in {city}", title: "Made, cooked and loved here.", craft: "Local craft", food: "On the plate",
     word: "Say it like a local", nearby: "Worth the trip", inCity: "In the city", km: "km away",
-    fly: "Fly from {city}", notify: "Tell me when {city} opens",
+    fly: "Fly from {city}", notify: "Tell me when {city} opens", skip: "Skip intro",
   },
   te: {
     kicker: "{city} ప్రత్యేకతలు", title: "ఇక్కడి కళ, ఇక్కడి రుచి, ఇక్కడి ప్రదేశాలు.", craft: "స్థానిక కళ", food: "తప్పక రుచి చూడండి",
     word: "స్థానికుల్లా పలకరించండి", nearby: "చూడదగ్గ ప్రదేశాలు", inCity: "నగరంలోనే", km: "కి.మీ. దూరం",
-    fly: "{city} నుంచి ప్రయాణం", notify: "{city} బుకింగ్ తెరిచినప్పుడు తెలియజేయండి",
+    fly: "{city} నుంచి ప్రయాణం", notify: "{city} బుకింగ్ తెరిచినప్పుడు తెలియజేయండి", skip: "ఇంట్రో దాటవేయండి",
   },
   hi: {
     kicker: "{city} की पहचान", title: "यहाँ की कला, यहाँ का स्वाद, यहाँ की जगहें।", craft: "स्थानीय कला", food: "थाली में",
     word: "स्थानीय अंदाज़ में कहें", nearby: "घूमने लायक", inCity: "शहर में ही", km: "कि.मी. दूर",
-    fly: "{city} से उड़ान", notify: "{city} की बुकिंग खुलने पर बताएँ",
+    fly: "{city} से उड़ान", notify: "{city} की बुकिंग खुलने पर बताएँ", skip: "इंट्रो छोड़ें",
   },
 };
 

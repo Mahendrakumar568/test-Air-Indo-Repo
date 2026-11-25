@@ -1231,3 +1231,111 @@ html[lang^="te"] .tile-label, html[lang^="hi"] .tile-label { letter-spacing: 0.0
 }
 html[lang^="te"] :is(.tile-name, .nearby b), html[lang^="hi"] :is(.tile-name, .nearby b) { font-weight: 600; letter-spacing: 0; line-height: 1.35; }
 html[lang^="te"] .nearby-km, html[lang^="hi"] .nearby-km { letter-spacing: 0; text-transform: none; font-size: 13px; }
+
+/* ---------- our story, redesigned ---------- */
+.story2 { padding: clamp(80px, 10vw, 140px) 0 clamp(64px, 8vw, 110px); background: linear-gradient(180deg, #fbf3e6 0%, #f7e9d4 100%); }
+.story2::before { display: none; }
+.story2::after { opacity: 0.16; -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 50%, #000 80%); mask-image: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 50%, #000 80%); }
+.story2 .wrap { display: grid; align-items: initial; flex-direction: initial; }
+.story2-grid { grid-template-columns: 1.2fr 0.8fr; gap: clamp(40px, 6vw, 96px); align-items: center !important; }
+.story2-copy { display: grid; gap: 26px; justify-items: start; }
+.story2 .manifesto-quote { margin: 0; max-width: 17ch; font-size: clamp(34px, 4.6vw, 66px); line-height: 1.08; text-align: left; }
+.story2 blockquote { margin: 0; }
+.story2 blockquote footer { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
+.story2 blockquote footer img { width: 40px; height: 40px; }
+.story2 blockquote footer span { display: grid; gap: 2px; font-size: 14px; color: var(--stone); }
+.story2 blockquote footer b { font-size: 16px; }
+.story2-cta { margin-top: 6px; }
+.story2-arch { position: relative; margin: 0; justify-self: center; width: min(100%, 420px); }
+.story2-frame { position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 999px 999px 18px 18px; overflow: hidden; box-shadow: 0 50px 90px -50px rgba(11, 23, 69, 0.6); z-index: 1; }
+.story2-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+.story2-arch::after { content: ""; position: absolute; inset: -14px; border: 1.5px solid rgba(232, 134, 42, 0.55); border-radius: 999px 999px 26px 26px; pointer-events: none; }
+.story2-sun { position: absolute; width: 38%; aspect-ratio: 1; border-radius: 50%; right: -12%; top: 8%; background: radial-gradient(circle at 40% 40%, #f6b54a, var(--saffron)); z-index: 0; }
+.story2-badge { position: absolute; z-index: 2; left: -8%; bottom: 10%; background: var(--navy); color: var(--ivory); padding: 12px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600; box-shadow: 0 20px 40px -20px rgba(11, 23, 69, 0.7); }
+.story2-values { list-style: none; margin-top: clamp(56px, 7vw, 96px) !important; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 44px); position: relative; z-index: 1; }
+.story2-values li { display: grid; gap: 10px; align-content: start; padding-top: 22px; border-top: 2px solid var(--saffron); }
+.sv-n { font: 400 15px/1 var(--font-display); color: var(--saffron-d); letter-spacing: 0.1em; }
+.story2-values b { font: 500 clamp(21px, 1.8vw, 26px)/1.25 var(--font-display); color: var(--navy); }
+.story2-values li > span:last-child { font-size: 15px; line-height: 1.6; color: var(--muted, #4b4a55); }
+.story2-values .reveal:nth-child(2) { transition-delay: 0.1s; }
+.story2-values .reveal:nth-child(3) { transition-delay: 0.2s; }
+html[lang^="te"] .story2 .manifesto-quote, html[lang^="hi"] .story2 .manifesto-quote { line-height: 1.4; max-width: 20ch; }
+html[lang^="te"] .story2-values b, html[lang^="hi"] .story2-values b { font-weight: 600; }
+@media (max-width: 900px) {
+  .story2-grid { grid-template-columns: 1fr; }
+  .story2-arch { width: min(78%, 340px); margin-top: 12px; }
+  .story2-values { grid-template-columns: 1fr; }
+}
+
+/* ---------- city opening sequence ---------- */
+.ci { display: none; }
+html[data-intro] { overflow: hidden; }
+html[data-intro] .ci { display: block; position: fixed; inset: 0; z-index: 1000; background: radial-gradient(120% 90% at 50% 40%, #13235f 0%, #0a1338 60%, #060c26 100%); color: var(--ivory); overflow: hidden; animation: ci-out 0.9s cubic-bezier(0.7, 0, 0.2, 1) 8.4s both; }
+@keyframes ci-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+.ci-act { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; }
+
+/* act 1: the wing grows from its saffron point */
+.ci-logo { gap: 22px; animation: ci-fade-out 0.5s ease 2s both; }
+.ci-logo img { width: clamp(84px, 9vw, 120px); height: auto; clip-path: circle(0% at 12% 88%); animation: ci-grow 1.3s cubic-bezier(0.3, 0.6, 0.2, 1) 0.25s both; }
+.ci-word { font: 500 clamp(18px, 1.6vw, 22px)/1 "Fraunces Variable", Georgia, serif; letter-spacing: 0.42em; padding-left: 0.42em; color: var(--ivory); animation: ci-rise 0.8s var(--ease) 1.05s both; }
+@keyframes ci-grow { to { clip-path: circle(150% at 12% 88%); } }
+@keyframes ci-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes ci-fade-out { to { opacity: 0; transform: translateY(-12px); visibility: hidden; } }
+@keyframes ci-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* act 2: the network finds the city */
+.ci-map { opacity: 0; animation: ci-fade-in 0.5s ease 2.2s both, ci-fade-out 0.5s ease 4.5s forwards; gap: 10px; }
+.ci-map svg { width: min(86vw, 560px); max-height: 62vh; height: auto; overflow: visible; }
+.ci-map path { fill: none; stroke: rgba(247, 242, 232, 0.22); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ci-draw 0.9s ease 2.45s forwards; }
+.ci-map path.on { stroke: var(--saffron); stroke-width: 2.4; animation: ci-draw 0.9s cubic-bezier(0.5, 0, 0.2, 1) 3.15s forwards; }
+@keyframes ci-draw { to { stroke-dashoffset: 0; } }
+.ci-dot { opacity: 0; animation: ci-fade-in 0.4s ease calc(2.3s + var(--i) * 0.07s) forwards; }
+.ci-dot circle { fill: rgba(247, 242, 232, 0.55); }
+.ci-dot.linked circle { fill: var(--ivory); }
+.ci-dot.self circle { fill: var(--saffron); }
+.ci-dot text { fill: rgba(247, 242, 232, 0.8); font: 600 11px/1 var(--font-body, Inter), sans-serif; letter-spacing: 0.14em; }
+.ci-dot.self text { fill: var(--gold); font-size: 13px; }
+.ci-ring { fill: none !important; stroke: var(--saffron); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: ci-ring 1.4s ease-out 3.3s 2 both; }
+@keyframes ci-ring { from { opacity: 0.9; transform: scale(0.4); } to { opacity: 0; transform: scale(2.2); } }
+.ci-caption { display: flex; gap: 18px; align-items: baseline; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 242, 232, 0.7); animation: ci-rise 0.7s var(--ease) 3.4s both; }
+.ci-caption b { color: var(--gold); font-weight: 600; }
+
+/* act 3: three local scenes open */
+.ci-panels { display: flex; place-items: stretch; }
+.ci-panels figure { position: relative; flex: 1; margin: 0; overflow: hidden; clip-path: inset(100% 0 0 0); animation: ci-open 1s cubic-bezier(0.6, 0, 0.2, 1) calc(4.55s + var(--i) * 0.22s) forwards; }
+.ci-panels figure + figure { border-left: 1px solid rgba(247, 242, 232, 0.25); }
+@keyframes ci-open { to { clip-path: inset(0 0 0 0); } }
+.ci-img { position: absolute; inset: -2% -6%; background: #13235f; animation: ci-drift 4.6s linear 4.55s both; }
+.ci-img img { object-fit: cover; }
+@keyframes ci-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+.ci-panels figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(6, 12, 38, 0.85)); }
+.ci-panels figcaption { position: absolute; z-index: 1; left: clamp(18px, 2.4vw, 36px); right: 18px; bottom: clamp(24px, 4vh, 48px); display: grid; gap: 8px; animation: ci-rise 0.7s var(--ease) calc(5.15s + var(--i) * 0.22s) both; }
+.ci-panels figcaption span { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.ci-panels figcaption b { font: 500 clamp(20px, 2vw, 30px)/1.15 var(--font-display, "Fraunces Variable"), Georgia, serif; }
+.ci-panels::after { content: ""; position: absolute; inset: 0; background: rgba(6, 12, 38, 0.74); opacity: 0; animation: ci-fade-in 0.7s ease 6.55s forwards; }
+
+/* act 4: the name lands */
+.ci-title { gap: 18px; text-align: center; padding: 0 24px; }
+.ci-hello { font-family: "Noto Sans Telugu", "Noto Sans Devanagari", "Noto Naskh Arabic", system-ui, sans-serif; font-size: clamp(22px, 2.4vw, 32px); color: var(--gold); animation: ci-rise 0.8s var(--ease) 6.75s both; }
+.ci-name { display: block; font: 500 clamp(52px, 10vw, 156px)/1.05 var(--font-display, "Fraunces Variable"), Georgia, serif; letter-spacing: -0.02em; overflow: hidden; padding: 0.06em 0 0.12em; }
+.ci-name span { display: inline-block; transform: translateY(110%); animation: ci-letter 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(6.95s + var(--i) * 0.045s) forwards; }
+@keyframes ci-letter { to { transform: none; } }
+.ci-state { display: inline-flex; align-items: center; justify-content: center; gap: 16px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(247, 242, 232, 0.8); animation: ci-rise 0.7s var(--ease) 7.5s both; }
+.ci-state i { width: 40px; height: 1px; background: var(--saffron); }
+html[lang^="te"] :is(.ci-state, .ci-caption, .ci-panels figcaption span), html[lang^="hi"] :is(.ci-state, .ci-caption, .ci-panels figcaption span) { letter-spacing: 0.04em; text-transform: none; font-size: 14px; }
+html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-spacing: 0; }
+.ci-name .ci-whole { transform: none; opacity: 0; animation: ci-rise 1s var(--ease) 6.95s forwards; }
+
+/* skip */
+.ci-skip { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: clamp(16px, 4vh, 40px); display: grid; gap: 8px; background: rgba(6, 12, 38, 0.35); border: 1px solid rgba(247, 242, 232, 0.35); color: var(--ivory); font: 600 13px/1 var(--font-body, Inter), sans-serif; letter-spacing: 0.08em; padding: 12px 18px 10px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px); }
+.ci-skip:hover, .ci-skip:focus-visible { background: var(--ivory); color: var(--navy); }
+.ci-bar { display: block; height: 2px; background: rgba(247, 242, 232, 0.2); border-radius: 2px; overflow: hidden; }
+.ci-bar span { display: block; height: 100%; background: var(--saffron); transform-origin: left; transform: scaleX(0); animation: ci-progress 8.4s linear both; }
+@keyframes ci-progress { to { transform: scaleX(1); } }
+@media (max-width: 640px) {
+  .ci-panels { flex-direction: column; }
+  .ci-panels figure { clip-path: inset(0 100% 0 0); }
+  .ci-panels figure + figure { border-left: 0; border-top: 1px solid rgba(247, 242, 232, 0.25); }
+  .ci-panels figcaption { bottom: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { html[data-intro] .ci { display: none; } html[data-intro] { overflow: auto; } }

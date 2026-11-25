@@ -8,11 +8,12 @@ import { resolve } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
 import { isLocale, locales } from "@/lib/i18n";
 import { getDict } from "@/lib/dict";
-import { cityBySlug, cityList, connectionsOf, distanceKm, blockMinutes, corridorsOfCity, cities } from "@/lib/data";
+import { cityBySlug, cityList, connectionsOf, distanceKm, blockMinutes, corridorsOfCity, cities, allLegs, project, type CityCode } from "@/lib/data";
 import { fmtTime } from "@/lib/format";
 import { Img } from "@/components/Img";
 import { Icon } from "@/components/Icon";
 import { CityMap } from "@/components/CityMap";
+import { CityIntro } from "@/components/CityIntro";
 
 type Props = { params: Promise<{ locale: string; city: string }> };
 
@@ -47,8 +48,35 @@ export default async function CityPage({ params }: Props) {
     return existsSync(join(process.cwd(), "public", f)) ? f : null;
   };
 
+  const curve = (a: CityCode, b: CityCode) => {
+    const P = project(a);
+    const Q = project(b);
+    const mx = (P.x + Q.x) / 2;
+    const my = (P.y + Q.y) / 2;
+    return `M${P.x} ${P.y} Q${mx - (Q.y - P.y) * 0.18} ${my + (Q.x - P.x) * 0.18} ${Q.x} ${Q.y}`;
+  };
+  const intro = {
+    code: c.code,
+    name: ct.name,
+    state: ct.state,
+    coords: `${c.lat.toFixed(2)}° N · ${c.lon.toFixed(2)}° E`,
+    greeting: cu.word.script,
+    skip: cl.skip,
+    dots: cityList.map((x) => ({ code: x.code, ...project(x.code), self: x.code === c.code, linked: conns.includes(x.code) })),
+    legs: allLegs.map((l) => {
+      const on = l.from === c.code || l.to === c.code;
+      return { d: on && l.to === c.code ? curve(l.to, l.from) : curve(l.from, l.to), on };
+    }),
+    panels: [
+      { src: photo("craft"), label: cl.craft, name: cu.craft.name },
+      { src: photo("food"), label: cl.food, name: cu.food.name },
+      { src: photo("place"), label: cl.nearby, name: cu.places[0].name },
+    ],
+  };
+
   return (
     <>
+      <CityIntro {...intro} />
       <section className="page-hero with-image" style={{ minHeight: "min(72vh, 640px)", display: "flex", alignItems: "flex-end" }}>
         <div className="hero-media"><Img slot={c.code} priority sizes="100vw" /></div>
         <div className="wrap" style={{ width: "100%" }}>

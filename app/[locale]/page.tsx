@@ -104,23 +104,34 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Manifesto */}
-      <section id="story" className="manifesto" aria-labelledby="manifesto-title">
-        <div className="wrap center reveal">
-          <img className="manifesto-mark" src="/brand/air-indo-symbol-colour.svg" alt="" width={72} height={72} loading="lazy" />
-          <span className="kicker">{t.about.kicker}</span>
-          <blockquote>
-            <p id="manifesto-title" className="manifesto-quote">&ldquo;{t.about.founderQuote}&rdquo;</p>
-            <footer>
-              <b>{t.about.founderName}</b> · {t.about.founderRole}
-            </footer>
-          </blockquote>
-          <ul className="manifesto-values">
-            {t.about.values.slice(0, 3).map(([title]) => (
-              <li key={title}>{title}</li>
-            ))}
-          </ul>
-          <Link href={L("/about")} className="link-arrow" style={{ marginTop: 40 }}>{t.common.readMore} <Icon name="arrow" size={18} /></Link>
+      <section id="story" className="manifesto story2" aria-labelledby="manifesto-title">
+        <div className="wrap story2-grid">
+          <div className="story2-copy reveal">
+            <span className="kicker">{t.about.kicker}</span>
+            <blockquote>
+              <p id="manifesto-title" className="manifesto-quote">&ldquo;{t.about.founderQuote}&rdquo;</p>
+              <footer>
+                <img src="/brand/air-indo-symbol-colour.svg" alt="" width={40} height={40} loading="lazy" />
+                <span><b>{t.about.founderName}</b>{t.about.founderRole}</span>
+              </footer>
+            </blockquote>
+            <Link href={L("/about")} className="btn btn-navy story2-cta">{t.common.readMore} <Icon name="arrow" size={18} /></Link>
+          </div>
+          <figure className="story2-arch reveal" aria-hidden="true">
+            <span className="story2-sun" />
+            <span className="story2-frame"><Img slot="heritage" sizes="(max-width: 900px) 80vw, 34vw" alt="" /></span>
+            <span className="story2-badge">{t.about.values[2][0]}</span>
+          </figure>
         </div>
+        <ol className="wrap story2-values">
+          {t.about.values.slice(0, 3).map(([title, text], i) => (
+            <li key={title} className="reveal">
+              <span className="sv-n">0{i + 1}</span>
+              <b>{title}</b>
+              <span>{text}</span>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* Fleet */}
