@@ -137,7 +137,7 @@ export function CinematicNetwork({ locale, names, corridorText, intro, labels }:
   const t = (m: number) => fmtTime(m, labels.h, labels.min);
 
   return (
-    <section className="cine on-dark" aria-labelledby={intro.id}>
+    <section id="network" data-tone="dark" className="cine on-dark" aria-labelledby={intro.id}>
       <div className="cine-stage">
         <div className="cine-bg" aria-hidden="true">
           {backdrops.map((k, i) => (

@@ -8,6 +8,7 @@ import { Icon, type IconName } from "@/components/Icon";
 import { CinematicNetwork } from "@/components/CinematicNetwork";
 import { RouteExplorer } from "@/components/RouteExplorer";
 import { DestinationRail } from "@/components/DestinationRail";
+import { SectionIndex } from "@/components/SectionIndex";
 import { Timeline } from "@/components/Timeline";
 import { FlightLines } from "@/components/FlightLines";
 import { keep } from "@/lib/keep";
@@ -26,10 +27,25 @@ export default async function Home({ params }: PageProps) {
   const h = t.home;
   const L = (p: string) => `/${locale}${p}`;
 
+  const index = [
+    { id: "top", label: h.kicker },
+    { id: "network", label: h.networkKicker },
+    { id: "story", label: t.about.kicker },
+    { id: "destinations", label: t.routes.destinationsTitle },
+    { id: "fleet", label: h.fleetKicker },
+    { id: "why", label: h.whyKicker },
+    { id: "onboard", label: h.experienceKicker },
+    { id: "cargo", label: t.nav.cargo },
+    { id: "progress", label: h.journeyKicker },
+    { id: "work-with-us", label: h.audienceKicker },
+    { id: "waitlist", label: t.nav.joinWaitlist },
+  ];
+
   return (
     <>
+      <SectionIndex items={index} label={t.common.onThisPage} />
       {/* Hero */}
-      <section className="hero hero-grand">
+      <section id="top" data-tone="dark" className="hero hero-grand">
         <div className="hero-media kb">
           <Img slot="hero" priority sizes="100vw" />
         </div>
@@ -50,7 +66,7 @@ export default async function Home({ params }: PageProps) {
             {h.stats.map(([n, label]) => (
               <div key={label}>
                 <dt className="sr-only">{label}</dt>
-                <dd><b className="tnum">{n}</b><span>{label}</span></dd>
+                <dd><b className="tnum" data-count="">{n}</b><span>{label}</span></dd>
               </div>
             ))}
           </dl>
@@ -68,7 +84,7 @@ export default async function Home({ params }: PageProps) {
       />
 
       {/* Manifesto */}
-      <section className="manifesto" aria-labelledby="manifesto-title">
+      <section id="story" className="manifesto" aria-labelledby="manifesto-title">
         <div className="wrap center reveal">
           <img className="manifesto-mark" src="/brand/air-indo-symbol-colour.svg" alt="" width={72} height={72} loading="lazy" />
           <span className="kicker">{t.about.kicker}</span>
@@ -87,8 +103,21 @@ export default async function Home({ params }: PageProps) {
         </div>
       </section>
 
+      {/* City ticker */}
+      <div className="ticker" aria-hidden="true">
+        <div className="ticker-track">
+          {[0, 1].map((k) => (
+            <span key={k}>
+              {cityList.map((c) => (
+                <span key={c.code} className="tk">{names[c.code]}<i>{c.code}</i></span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Destinations */}
-      <section className="section dest-section" aria-labelledby="dest-title">
+      <section id="destinations" className="section dest-section" aria-labelledby="dest-title">
         <div className="wrap">
           <div className="head-row reveal">
             <div className="head">
@@ -114,7 +143,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Fleet */}
-      <section className="cinema" aria-labelledby="fleet-title">
+      <section id="fleet" data-tone="dark" className="cinema" aria-labelledby="fleet-title">
         <div className="cinema-media kb-scroll"><Img slot="fleet" sizes="100vw" /></div>
         <div className="wrap cinema-copy on-dark">
           <div className="reveal">
@@ -126,7 +155,7 @@ export default async function Home({ params }: PageProps) {
             {fleetSpecs.slice(0, 3).map((s) => (
               <div key={s.key}>
                 <dt>{t.fleet.specs[s.key as keyof typeof t.fleet.specs]}</dt>
-                <dd>{s.value}</dd>
+                <dd data-count="">{s.value}</dd>
               </div>
             ))}
             <div className="cinema-link">
@@ -137,7 +166,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Why */}
-      <section className="section" aria-labelledby="why-title">
+      <section id="why" className="section" aria-labelledby="why-title">
         <div className="wrap why-split">
           <div className="why-aside">
             <div className="head reveal">
@@ -161,7 +190,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Experience */}
-      <section className="section bg-ivory experience-band" aria-labelledby="exp-title">
+      <section id="onboard" className="section bg-ivory experience-band" aria-labelledby="exp-title">
         <div className="wrap">
           <div className="head-row reveal">
             <div className="head">
@@ -180,7 +209,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Cargo */}
-      <section className="section cargo-band" aria-labelledby="cargo-title">
+      <section id="cargo" className="section cargo-band" aria-labelledby="cargo-title">
         <div className="wrap split">
           <div className="media r-4-3 reveal cargo-photo"><Img slot="cargo" sizes="(max-width: 960px) 100vw, 640px" /></div>
           <div className="reveal">
@@ -195,7 +224,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Progress */}
-      <section id="progress" className="section bg-navy-3" aria-labelledby="progress-title" style={{ position: "relative", overflow: "hidden", isolation: "isolate" }}>
+      <section id="progress" data-tone="dark" className="section bg-navy-3" aria-labelledby="progress-title" style={{ position: "relative", overflow: "hidden", isolation: "isolate" }}>
         <FlightLines className="flight-lines" />
         <div className="wrap">
           <div className="head reveal" style={{ marginBottom: 56 }}>
@@ -208,7 +237,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Audiences */}
-      <section className="section" aria-labelledby="aud-title">
+      <section id="work-with-us" className="section" aria-labelledby="aud-title">
         <div className="wrap">
           <div className="head reveal" style={{ marginBottom: 40 }}>
             <span className="kicker">{h.audienceKicker}</span>
@@ -230,7 +259,7 @@ export default async function Home({ params }: PageProps) {
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="section closing on-dark" aria-labelledby="wl-title">
+      <section id="waitlist" data-tone="dark" className="section closing on-dark" aria-labelledby="wl-title">
         <div className="closing-media" aria-hidden="true"><Img slot="arrival" alt="" sizes="100vw" /></div>
         <div className="wrap split split-top">
           <div className="stack" style={{ ["--gap" as string]: "24px" }}>

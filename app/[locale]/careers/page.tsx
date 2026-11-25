@@ -29,7 +29,7 @@ export default async function Careers({ params }: PageProps) {
 
   return (
     <>
-      <PageHero kicker={c.kicker} title={c.title} lead={c.lead} image="careersTeam">
+      <PageHero kicker={c.kicker} title={c.title} lead={c.lead} image="careersTeam" facts={[[String(jobs.length), c.openTitle], [String(new Set(jobs.map((j) => j.dept)).size), c.filterAll], [String(new Set(jobs.map((j) => j.location)).size), t.home.stats[0][1]]]}>
         <div className="btn-row" style={{ marginTop: 32 }}>
           <a href="#roles" className="btn btn-primary">{c.openTitle}</a>
         </div>
@@ -61,7 +61,7 @@ export default async function Careers({ params }: PageProps) {
             depts={c.depts}
             jobText={c.jobs}
             cityNames={names}
-            labels={{ all: c.filterAll, fullTime: c.fullTime, apply: c.apply }}
+            labels={{ all: c.filterAll, fullTime: c.fullTime, apply: c.apply, search: t.common.search, none: t.common.noResults }}
           />
         </div>
       </section>
@@ -86,7 +86,7 @@ export default async function Careers({ params }: PageProps) {
 
       <section className="section" id="apply">
         <div className="wrap split split-top">
-          <div className="head">
+          <div className="head sticky-col">
             <h2 className="h2">{c.applyTitle}</h2>
             <p className="lead">{c.applyLead}</p>
             <p className="fine" style={{ marginTop: 24 }}>{c.equal}</p>

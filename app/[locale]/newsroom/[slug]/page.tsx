@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShareBar } from "@/components/ShareBar";
 import { notFound } from "next/navigation";
 import { resolve } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
@@ -46,9 +47,10 @@ export default async function Article({ params }: Props) {
         <header className="section-sm" style={{ paddingBottom: 32 }}>
           <div className="wrap article">
             <Link href={`/${locale}/newsroom`} className="link-arrow" style={{ border: 0 }}>← {t.nav.newsroom}</Link>
-            <span className="kicker" style={{ display: "block", marginTop: 32 }}>{t.newsroom.tags[p.tag]}</span>
+            <span className="kicker" style={{ marginTop: 32 }}>{t.newsroom.tags[p.tag]} · ~{Math.max(1, Math.round(post.body.join(" ").split(/\s+/).length / 200))} {t.common.minutes}</span>
             <h1 className="h2" style={{ marginTop: 12 }}>{post.title}</h1>
             <p className="lead" style={{ marginTop: 18 }}>{post.excerpt}</p>
+            <ShareBar title={post.title} labels={{ share: t.common.share, copy: t.common.copyLink, copied: t.common.copied }} />
           </div>
         </header>
         <div className="wrap" style={{ maxWidth: 1040 }}>
@@ -66,8 +68,8 @@ export default async function Article({ params }: Props) {
           <h2 className="h3" style={{ marginBottom: 28 }}>{t.newsroom.title}</h2>
           <div className="grid g3">
             {others.map((o) => (
-              <Link key={o.slug} href={`/${locale}/newsroom/${o.slug}`} className="news-card">
-                <div className="media"><Img slot={o.image} sizes="(max-width: 640px) 100vw, 400px" /></div>
+              <Link key={o.slug} href={`/${locale}/newsroom/${o.slug}`} className="news-card reveal">
+                <div className="media reveal"><Img slot={o.image} sizes="(max-width: 640px) 100vw, 400px" /></div>
                 <span className="kicker tag">{t.newsroom.tags[o.tag]}</span>
                 <h3>{t.newsroom.posts[o.slug].title}</h3>
                 <span className="link-arrow" style={{ marginTop: 12, alignSelf: "flex-start" }}>{t.common.readMore} <Icon name="arrow" size={16} /></span>

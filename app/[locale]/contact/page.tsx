@@ -31,7 +31,7 @@ export default async function Contact({ params, searchParams }: Props) {
       <PageHero kicker={c.kicker} title={c.title} lead={c.lead} image="office" />
       <section className="section">
         <div className="wrap split split-top">
-          <div>
+          <div className="sticky-col">
             <h2 className="h3">{c.channelsTitle}</h2>
             <ul style={{ listStyle: "none", marginTop: 24 }} className="stack">
               <li style={{ display: "flex", gap: 16 }}>

@@ -12,6 +12,7 @@ import { getDict } from "@/lib/dict";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { ScrollUi } from "@/components/ScrollUi";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -75,6 +76,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         </main>
         <Footer locale={locale as Locale} t={t} />
         <Reveal />
+        <ScrollUi label={t.common.backToTop} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

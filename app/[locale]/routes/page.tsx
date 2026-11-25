@@ -21,7 +21,7 @@ export default async function Routes({ params }: PageProps) {
   const r = t.routes;
   return (
     <>
-      <PageHero kicker={r.kicker} title={r.title} lead={r.lead} image="heroAlt" />
+      <PageHero kicker={r.kicker} title={r.title} lead={r.lead} image="heroAlt" facts={t.home.stats.slice(0, 3) as [string, string][]} />
       <CinematicNetwork
         locale={locale}
         names={names}

@@ -19,7 +19,7 @@ export default async function Investors({ params }: PageProps) {
   const v = t.investors;
   return (
     <>
-      <PageHero kicker={v.kicker} title={v.title} lead={v.lead} image="investors">
+      <PageHero kicker={v.kicker} title={v.title} lead={v.lead} image="investors" facts={t.home.stats.slice(0, 3) as [string, string][]}>
         <div className="btn-row" style={{ marginTop: 32 }}>
           <a href="#deck" className="btn btn-primary">{v.deckTitle}</a>
         </div>
@@ -75,7 +75,7 @@ export default async function Investors({ params }: PageProps) {
 
       <section className="section">
         <div className="wrap split split-top">
-          <div>
+          <div className="sticky-col">
             <h2 className="h2">{v.principlesTitle}</h2>
             <div className="stack" style={{ marginTop: 32, ["--gap" as string]: "28px" }}>
               {v.principles.map(([title, body]) => (

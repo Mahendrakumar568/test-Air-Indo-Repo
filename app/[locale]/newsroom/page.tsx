@@ -5,7 +5,7 @@ import { isLocale } from "@/lib/i18n";
 import { newsPosts } from "@/lib/data";
 import { company } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
-import { Img } from "@/components/Img";
+import { NewsGrid } from "@/components/NewsGrid";
 import { Icon } from "@/components/Icon";
 
 export async function generateMetadata({ params }: PageProps) {
@@ -20,15 +20,13 @@ export default async function Newsroom({ params }: PageProps) {
     <>
       <PageHero kicker={n.kicker} title={n.title} lead={n.lead} />
       <section className="section">
-        <div className="wrap grid g2" style={{ rowGap: 56 }}>
-          {newsPosts.map((p) => (
-            <Link key={p.slug} href={`/${locale}/newsroom/${p.slug}`} className="news-card reveal">
-              <div className="media"><Img slot={p.image} sizes="(max-width: 640px) 100vw, 600px" /></div>
-              <span className="kicker tag">{n.tags[p.tag]}</span>
-              <h2 className="h3">{n.posts[p.slug].title}</h2>
-              <p>{n.posts[p.slug].excerpt}</p>
-            </Link>
-          ))}
+        <div className="wrap">
+          <NewsGrid
+            href={`/${locale}/newsroom`}
+            all={t.common.all}
+            tags={n.tags}
+            posts={newsPosts.map((p) => ({ slug: p.slug, tag: p.tag, image: p.image, title: n.posts[p.slug].title, excerpt: n.posts[p.slug].excerpt }))}
+          />
         </div>
       </section>
       <section className="section bg-ivory" id="press">

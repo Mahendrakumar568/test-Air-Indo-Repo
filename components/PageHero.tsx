@@ -9,9 +9,10 @@ type Props = {
   lead?: string;
   image?: ImageKey;
   children?: React.ReactNode;
+  facts?: [string, string][];
 };
 
-export function PageHero({ kicker, title, lead, image, children }: Props) {
+export function PageHero({ kicker, title, lead, image, children, facts }: Props) {
   return (
     <section className={`page-hero${image ? " with-image" : ""}`}>
       {image ? (
@@ -27,6 +28,13 @@ export function PageHero({ kicker, title, lead, image, children }: Props) {
           <h1 className="h1">{keep(title)}</h1>
           {lead && <p className="lead">{lead}</p>}
           {children}
+          {facts && (
+            <dl className="hero-facts">
+              {facts.map(([v, l]) => (
+                <div key={l}><dt>{l}</dt><dd className="tnum" data-count="">{v}</dd></div>
+              ))}
+            </dl>
+          )}
         </div>
       </div>
     </section>

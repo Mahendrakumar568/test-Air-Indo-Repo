@@ -9,6 +9,7 @@ import { fmtTime } from "@/lib/format";
 import { Img } from "@/components/Img";
 import { Icon } from "@/components/Icon";
 import { WaitlistForm } from "@/components/forms/WaitlistForm";
+import { CityMap } from "@/components/CityMap";
 
 type Props = { params: Promise<{ locale: string; city: string }> };
 
@@ -33,6 +34,8 @@ export default async function CityPage({ params }: Props) {
   const ct = t.cities[c.code];
   const conns = connectionsOf(c.code);
   const corrs = corridorsOfCity(c.code);
+  const shortest = Math.min(...conns.map((to) => blockMinutes(distanceKm(c.code, to))));
+  const q = t.routes.quick;
 
   return (
     <>
@@ -45,54 +48,67 @@ export default async function CityPage({ params }: Props) {
           <span className="kicker">{ct.state} · {c.code}</span>
           <h1 className="h1">{ct.name}</h1>
           <p className="lead">{ct.tagline}</p>
+          <dl className="hero-facts">
+            <div><dt>{q.airport}</dt><dd>{c.code}</dd></div>
+            <div><dt>{q.links}</dt><dd data-count="">{conns.length}</dd></div>
+            <div><dt>{q.shortest}</dt><dd>~{fmtTime(shortest, t.common.hours, t.common.minutes)}</dd></div>
+          </dl>
         </div>
       </section>
 
       <section className="section">
         <div className="wrap split split-top">
-          <div>
-            <p className="lead" style={{ color: "var(--ink)" }}>{ct.about}</p>
-            <dl className="facts" style={{ marginTop: 36 }}>
+          <div className="reveal">
+            <span className="kicker">{ct.state}</span>
+            <p className="story-lead" style={{ marginTop: 18 }}>{ct.about}</p>
+            <h2 className="h3" style={{ marginTop: 44 }}>{t.routes.highlights}</h2>
+            <ul className="hl-list">
+              {ct.highlights.map((hl, i) => (
+                <li key={hl}><span className="hl-n">0{i + 1}</span>{hl}</li>
+              ))}
+            </ul>
+            <dl className="facts" style={{ marginTop: 40 }}>
               <div><dt>{t.routes.airport}</dt><dd>{ct.airport} ({c.code})</dd></div>
               <div><dt>{t.routes.corridorLabel}</dt><dd>{corrs.map((id) => t.corridors[id][0]).join(" / ")}</dd></div>
             </dl>
-            <h2 className="h3" style={{ marginTop: 48 }}>{t.routes.highlights}</h2>
-            <ul style={{ listStyle: "none", marginTop: 16 }} className="stack">
-              {ct.highlights.map((hl) => (
-                <li key={hl} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <span style={{ color: "var(--saffron)" }}><Icon name="pin" size={20} /></span> {hl}
-                </li>
-              ))}
-            </ul>
           </div>
-          <div>
-            <h2 className="h3">{t.routes.connections}</h2>
-            <div className="stack" style={{ marginTop: 18, ["--gap" as string]: "12px" }}>
-              {conns.map((to) => {
-                const km = distanceKm(c.code, to);
-                return (
-                  <Link key={to} href={`/${locale}/routes/${cities[to].slug}`} className="corridor" style={{ textDecoration: "none" }}>
-                    <span className="label">{t.routes.nonstop} · {t.common.proposed}</span>
-                    <h3 style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      {names[c.code]} <Icon name="arrow" size={18} /> {names[to]}
-                    </h3>
-                    <span className="legs">
-                      <span className="leg-pill">{c.code}–{to}</span>
-                      <span className="leg-pill">{km.toLocaleString("en-IN")} {t.common.km}</span>
-                      <span className="leg-pill">~{fmtTime(blockMinutes(km), t.common.hours, t.common.minutes)}</span>
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-            <div className="form-panel" style={{ marginTop: 32 }}>
-              <h2 className="h3">{t.routes.notifyTitle}</h2>
-              <p className="body" style={{ margin: "8px 0 22px" }}>{t.routes.notifyLead}</p>
-              <WaitlistForm locale={locale} t={t.forms} names={names} defaultFrom={c.code} source={`city-${c.code}`} idPrefix="cw" />
+          <div className="reveal">
+            <div className="map-panel">
+              <CityMap code={c.code} names={names} label={`${t.routes.connections}: ${conns.map((x) => names[x]).join(", ")}`} />
+              <h2 className="h3">{t.routes.connections}</h2>
+              <ul className="conn-list">
+                {conns.map((to) => {
+                  const km = distanceKm(c.code, to);
+                  return (
+                    <li key={to}>
+                      <Link href={`/${locale}/routes/${cities[to].slug}`} className="conn">
+                        <span className="conn-route"><b>{c.code}</b><i /><b>{to}</b></span>
+                        <span className="conn-name">{names[to]}</span>
+                        <span className="conn-meta tnum">{km.toLocaleString("en-IN")} {t.common.km} · ~{fmtTime(blockMinutes(km), t.common.hours, t.common.minutes)}</span>
+                        <Icon name="arrow" size={18} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
         </div>
       </section>
+
+      <section className="section-sm bg-ivory">
+        <div className="wrap split split-top">
+          <div className="head reveal sticky-col">
+            <span className="kicker">{t.forms.waitlist.title}</span>
+            <h2 className="h2">{t.routes.notifyTitle}</h2>
+            <p className="lead">{t.routes.notifyLead}</p>
+          </div>
+          <div className="form-panel">
+            <WaitlistForm locale={locale} t={t.forms} names={names} defaultFrom={c.code} source={`city-${c.code}`} idPrefix="cw" />
+          </div>
+        </div>
+      </section>
+
       {(() => {
         const i = cityList.findIndex((x) => x.code === c.code);
         const n = cityList[(i + 1) % cityList.length];
