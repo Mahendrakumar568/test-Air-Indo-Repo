@@ -13,6 +13,9 @@ export type CityIntroProps = {
   coords: string;
   greeting: string;
   skip: string;
+  aerial: string;
+  alt: string;
+  descend: string;
   dots: Dot[];
   legs: Leg[];
   panels: Panel[];
@@ -87,6 +90,22 @@ export function CityIntro(p: CityIntroProps) {
               ))}
             </svg>
             <p className="ci-caption"><b>{p.state}</b><span>{p.coords}</span></p>
+          </div>
+
+          <div className="ci-act ci-dive" aria-hidden="true">
+            <span className="ci-aerial"><Image src={p.aerial} alt="" fill sizes="100vw" quality={70} loading="eager" /></span>
+            <span className="ci-streaks" />
+            <span className="ci-cloud c3" />
+            <span className="ci-cloud c2" />
+            <span className="ci-cloud c1" />
+            <span className="ci-hud"><span className="ci-reticle" /></span>
+            <span className="ci-alt">
+              {p.alt}
+              <span className="ci-alt-steps">
+                {["3,000 m", "1,200 m", "300 m"].map((a, i) => <span key={a} style={{ ["--t" as string]: `${4.75 + i * 0.85}s` }}><b>{a}</b></span>)}
+              </span>
+            </span>
+            <span className="ci-into">{p.descend.split("{city}")[0]}<b>{p.name}</b>{p.descend.split("{city}")[1]}</span>
           </div>
 
           <div className="ci-act ci-panels" aria-hidden="true">

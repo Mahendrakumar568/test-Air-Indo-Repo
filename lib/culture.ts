@@ -29,22 +29,22 @@ export const motifOf: Record<CityCode, Motif> = { VTZ: "waves", VGA: "dots", HYD
 
 export const cultureLabels: Record<Locale, {
   kicker: string; title: string; craft: string; food: string; word: string; nearby: string;
-  inCity: string; km: string; fly: string; notify: string; skip: string;
+  inCity: string; km: string; fly: string; notify: string; skip: string; listen: string; stop: string; alt: string; descend: string;
 }> = {
   en: {
     kicker: "Rooted in {city}", title: "Made, cooked and loved here.", craft: "Local craft", food: "On the plate",
     word: "Say it like a local", nearby: "Worth the trip", inCity: "In the city", km: "km away",
-    fly: "Fly from {city}", notify: "Tell me when {city} opens", skip: "Skip intro",
+    fly: "Fly from {city}", notify: "Tell me when {city} opens", skip: "Skip intro", listen: "Listen", stop: "Stop", alt: "Altitude", descend: "Descending into {city}",
   },
   te: {
     kicker: "{city} ప్రత్యేకతలు", title: "ఇక్కడి కళ, ఇక్కడి రుచి, ఇక్కడి ప్రదేశాలు.", craft: "స్థానిక కళ", food: "తప్పక రుచి చూడండి",
     word: "స్థానికుల్లా పలకరించండి", nearby: "చూడదగ్గ ప్రదేశాలు", inCity: "నగరంలోనే", km: "కి.మీ. దూరం",
-    fly: "{city} నుంచి ప్రయాణం", notify: "{city} బుకింగ్ తెరిచినప్పుడు తెలియజేయండి", skip: "ఇంట్రో దాటవేయండి",
+    fly: "{city} నుంచి ప్రయాణం", notify: "{city} బుకింగ్ తెరిచినప్పుడు తెలియజేయండి", skip: "ఇంట్రో దాటవేయండి", listen: "వినండి", stop: "ఆపండి", alt: "ఎత్తు", descend: "{city} వైపు దిగుతున్నాం",
   },
   hi: {
     kicker: "{city} की पहचान", title: "यहाँ की कला, यहाँ का स्वाद, यहाँ की जगहें।", craft: "स्थानीय कला", food: "थाली में",
     word: "स्थानीय अंदाज़ में कहें", nearby: "घूमने लायक", inCity: "शहर में ही", km: "कि.मी. दूर",
-    fly: "{city} से उड़ान", notify: "{city} की बुकिंग खुलने पर बताएँ", skip: "इंट्रो छोड़ें",
+    fly: "{city} से उड़ान", notify: "{city} की बुकिंग खुलने पर बताएँ", skip: "इंट्रो छोड़ें", listen: "सुनें", stop: "रोकें", alt: "ऊँचाई", descend: "{city} की ओर उतर रहे हैं",
   },
 };
 
@@ -235,4 +235,14 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       ],
     },
   },
+};
+
+/** Voices to try for each greeting, best first. The last entry always speaks (Indian English, romanised). */
+export const greetingVoice: Record<CityCode, { lang: string; text: string }[]> = {
+  VTZ: [{ lang: "te-IN", text: "నమస్కారం" }, { lang: "en-IN", text: "Namaskaaram" }],
+  VGA: [{ lang: "te-IN", text: "బాగున్నారా?" }, { lang: "en-IN", text: "Baagunnaaraa?" }],
+  HYD: [{ lang: "ur-IN", text: "آداب" }, { lang: "ur-PK", text: "آداب" }, { lang: "hi-IN", text: "आदाब" }, { lang: "en-IN", text: "Aadaab" }],
+  GOI: [{ lang: "kok-IN", text: "देव बरें करूं" }, { lang: "mr-IN", text: "देव बरें करूं" }, { lang: "hi-IN", text: "देव बरें करूं" }, { lang: "en-IN", text: "Dev borem korum" }],
+  BHO: [{ lang: "hi-IN", text: "राम राम" }, { lang: "en-IN", text: "Raam Raam" }],
+  PNQ: [{ lang: "mr-IN", text: "काय म्हणता?" }, { lang: "hi-IN", text: "काय म्हणता?" }, { lang: "en-IN", text: "Kaay mhanta?" }],
 };

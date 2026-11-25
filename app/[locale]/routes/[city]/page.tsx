@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { culture, cultureLabels, placeKm, motifOf } from "@/lib/culture";
+import { culture, cultureLabels, placeKm, motifOf, greetingVoice } from "@/lib/culture";
+import { SayIt } from "@/components/SayIt";
 import { notFound } from "next/navigation";
 import { resolve } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
@@ -14,6 +15,7 @@ import { Img } from "@/components/Img";
 import { Icon } from "@/components/Icon";
 import { CityMap } from "@/components/CityMap";
 import { CityIntro } from "@/components/CityIntro";
+import { images } from "@/lib/images";
 
 type Props = { params: Promise<{ locale: string; city: string }> };
 
@@ -43,7 +45,7 @@ export default async function CityPage({ params }: Props) {
   const cu = culture[locale][c.code];
   const cl = cultureLabels[locale];
   /** Culture photos are optional: use one only if it has been added to public/images/city. */
-  const photo = (kind: "craft" | "food" | "place") => {
+  const photo = (kind: "craft" | "food" | "place" | "aerial") => {
     const f = `/images/city/${kind}-${c.code.toLowerCase()}.webp`;
     return existsSync(join(process.cwd(), "public", f)) ? f : null;
   };
@@ -62,6 +64,9 @@ export default async function CityPage({ params }: Props) {
     coords: `${c.lat.toFixed(2)}° N · ${c.lon.toFixed(2)}° E`,
     greeting: cu.word.script,
     skip: cl.skip,
+    aerial: photo("aerial") ?? images[c.code].src,
+    alt: cl.alt,
+    descend: cl.descend,
     dots: cityList.map((x) => ({ code: x.code, ...project(x.code), self: x.code === c.code, linked: conns.includes(x.code) })),
     legs: allLegs.map((l) => {
       const on = l.from === c.code || l.to === c.code;
@@ -123,6 +128,7 @@ export default async function CityPage({ params }: Props) {
               <span className="word-script" lang={c.code === "HYD" ? "ur" : undefined}>{cu.word.script}</span>
               <span className="word-roman">{cu.word.roman}</span>
               <span className="tile-line">{cu.word.meaning}</span>
+              <SayIt src={existsSync(join(process.cwd(), "public", `audio/greet-${c.code.toLowerCase()}.mp3`)) ? `/audio/greet-${c.code.toLowerCase()}.mp3` : null} tries={greetingVoice[c.code]} label={cl.listen} stopLabel={cl.stop} />
             </figure>
             <figure className={`tile tile-place reveal${photo("place") ? " has-img" : ""}`}>
               {photo("place") && <Image src={photo("place")!} alt={cu.places[0].name} fill sizes="(max-width: 860px) 100vw, 30vw" quality={78} />}

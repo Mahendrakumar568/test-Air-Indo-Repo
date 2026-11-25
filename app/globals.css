@@ -19,7 +19,7 @@
 
   --font-display: "Fraunces Variable", "Fraunces", Georgia, "Noto Sans Telugu", "Noto Sans Devanagari", serif;
   --font-body: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", "Noto Sans Telugu", "Noto Sans Devanagari", sans-serif;
-  --wrap: 1240px;
+  --wrap: clamp(1240px, 80vw, 1520px);
   --gutter: clamp(16px, 4vw, 40px);
   --radius: 4px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -1270,7 +1270,7 @@ html[lang^="te"] .story2-values b, html[lang^="hi"] .story2-values b { font-weig
 /* ---------- city opening sequence ---------- */
 .ci { display: none; }
 html[data-intro] { overflow: hidden; }
-html[data-intro] .ci { display: block; position: fixed; inset: 0; z-index: 1000; background: radial-gradient(120% 90% at 50% 40%, #13235f 0%, #0a1338 60%, #060c26 100%); color: var(--ivory); overflow: hidden; animation: ci-out 0.9s cubic-bezier(0.7, 0, 0.2, 1) 8.4s both; }
+html[data-intro] .ci { display: block; position: fixed; inset: 0; z-index: 1000; background: radial-gradient(120% 90% at 50% 40%, #13235f 0%, #0a1338 60%, #060c26 100%); color: var(--ivory); overflow: hidden; animation: ci-out 0.9s cubic-bezier(0.7, 0, 0.2, 1) 11.4s both; }
 @keyframes ci-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
 .ci-act { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; }
 
@@ -1284,7 +1284,7 @@ html[data-intro] .ci { display: block; position: fixed; inset: 0; z-index: 1000;
 @keyframes ci-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 /* act 2: the network finds the city */
-.ci-map { opacity: 0; animation: ci-fade-in 0.5s ease 2.2s both, ci-fade-out 0.5s ease 4.5s forwards; gap: 10px; }
+.ci-map { opacity: 0; animation: ci-fade-in 0.5s ease 2.2s both, ci-fade-out 0.5s ease 4.6s forwards; gap: 10px; }
 .ci-map svg { width: min(86vw, 560px); max-height: 62vh; height: auto; overflow: visible; }
 .ci-map path { fill: none; stroke: rgba(247, 242, 232, 0.22); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ci-draw 0.9s ease 2.45s forwards; }
 .ci-map path.on { stroke: var(--saffron); stroke-width: 2.4; animation: ci-draw 0.9s cubic-bezier(0.5, 0, 0.2, 1) 3.15s forwards; }
@@ -1300,37 +1300,67 @@ html[data-intro] .ci { display: block; position: fixed; inset: 0; z-index: 1000;
 .ci-caption { display: flex; gap: 18px; align-items: baseline; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 242, 232, 0.7); animation: ci-rise 0.7s var(--ease) 3.4s both; }
 .ci-caption b { color: var(--gold); font-weight: 600; }
 
+/* act 2b: the skydive into the city */
+.ci-dive { overflow: hidden; opacity: 0; background: linear-gradient(180deg, #c9d3e3 0%, #f1dfc4 100%); animation: ci-fade-in 0.35s ease 4.45s forwards, ci-fade-out 0.6s ease 7.9s forwards; }
+.ci-aerial { position: absolute; inset: 0; transform: scale(1); filter: blur(6px) saturate(0.8) brightness(1.05); animation: ci-fall 3.3s cubic-bezier(0.5, 0, 0.3, 1) 4.5s forwards; }
+.ci-aerial img { object-fit: cover; }
+@keyframes ci-fall { 55% { filter: blur(1.5px) saturate(0.95); } to { transform: scale(1.9); filter: none; } }
+@property --hole { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+.ci-cloud { position: absolute; inset: -20%; pointer-events: none; }
+.ci-cloud.c1 { background: radial-gradient(30% 26% at 30% 40%, #fff, transparent 70%), radial-gradient(34% 28% at 72% 58%, #fbf4ea, transparent 70%), radial-gradient(28% 24% at 52% 30%, #fff, transparent 70%), linear-gradient(#eee8df, #f4e6d2); filter: blur(8px); -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent var(--hole), #000 calc(var(--hole) + 22%)); mask-image: radial-gradient(circle at 50% 50%, transparent var(--hole), #000 calc(var(--hole) + 22%)); animation: ci-open-hole 2.2s cubic-bezier(0.55, 0, 0.4, 1) 4.75s forwards, ci-swell 2.2s ease-in 4.75s forwards; }
+@keyframes ci-open-hole { to { --hole: 90%; } }
+@keyframes ci-swell { to { transform: scale(1.5); opacity: 0; } }
+.ci-cloud.c2, .ci-cloud.c3 { opacity: 0; animation: ci-wisp 1.8s ease-in var(--d) forwards; }
+.ci-cloud.c2 { --d: 5.4s; background: radial-gradient(22% 16% at 22% 68%, rgba(255, 255, 255, 0.85), transparent 70%), radial-gradient(24% 16% at 80% 28%, rgba(255, 244, 228, 0.85), transparent 70%); filter: blur(12px); }
+.ci-cloud.c3 { --d: 6.1s; background: radial-gradient(18% 12% at 30% 26%, rgba(255, 255, 255, 0.75), transparent 70%), radial-gradient(20% 12% at 72% 78%, rgba(255, 255, 255, 0.7), transparent 70%); filter: blur(10px); }
+@keyframes ci-wisp { 0% { opacity: 0; transform: scale(0.8); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(2.6); } }
+.ci-streaks { position: absolute; inset: -30%; opacity: 0; background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(247, 242, 232, 0.5) 0deg 0.35deg, transparent 0.35deg 9deg); -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 18%, #000 60%); mask-image: radial-gradient(circle at 50% 50%, transparent 18%, #000 60%); animation: ci-streak 2.6s ease-in 4.7s forwards; }
+@keyframes ci-streak { 0% { opacity: 0; transform: scale(1); } 30% { opacity: 0.55; } 100% { opacity: 0; transform: scale(2.4); } }
+.ci-hud { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.ci-reticle { width: clamp(90px, 10vw, 140px); aspect-ratio: 1; border-radius: 50%; border: 1.5px solid rgba(232, 134, 42, 0.9); position: relative; opacity: 0; animation: ci-rise 0.6s var(--ease) 5.6s forwards, ci-fade-out 0.5s ease 7.2s forwards; }
+.ci-reticle::before, .ci-reticle::after { content: ""; position: absolute; background: var(--saffron); left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.ci-reticle::before { width: 7px; height: 7px; border-radius: 50%; }
+.ci-reticle::after { width: 170%; height: 1px; background: linear-gradient(90deg, var(--saffron) 0 22%, transparent 22% 78%, var(--saffron) 78%); }
+.ci-alt { padding: 14px 18px; border-radius: 12px; background: rgba(6, 12, 38, 0.45); backdrop-filter: blur(6px); opacity: 0; animation: ci-fade-in 0.4s ease 4.7s forwards, ci-fade-out 0.4s ease 7.3s forwards; position: absolute; left: clamp(18px, 4vw, 56px); top: 50%; transform: translateY(-50%); display: grid; gap: 10px; font: 600 12px/1 var(--font-body, Inter), sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 242, 232, 0.85); text-shadow: 0 1px 8px rgba(6, 12, 38, 0.6); }
+.ci-alt-steps { display: grid; }
+.ci-alt-steps > span { grid-area: 1 / 1; opacity: 0; animation: ci-blink 0.9s ease var(--t) both; }
+.ci-alt b { color: var(--gold); font: 500 clamp(26px, 3vw, 40px)/1 "Fraunces Variable", Georgia, serif; letter-spacing: 0; text-transform: none; display: block; margin-top: 6px; }
+@keyframes ci-blink { 0% { opacity: 0; transform: translateY(8px); } 25%, 75% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-8px); } }
+.ci-into { position: absolute; left: 50%; bottom: clamp(70px, 14vh, 140px); transform: translateX(-50%); white-space: nowrap; padding: 12px 20px; border-radius: 999px; background: rgba(6, 12, 38, 0.55); backdrop-filter: blur(6px); font: 600 13px/1 var(--font-body, Inter), sans-serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ivory); text-shadow: 0 1px 10px rgba(6, 12, 38, 0.7); animation: ci-rise 0.6s var(--ease) 5.9s both, ci-fade-out 0.5s ease 7.3s forwards; }
+.ci-into b { color: var(--gold); }
+html[lang^="te"] :is(.ci-alt, .ci-into), html[lang^="hi"] :is(.ci-alt, .ci-into) { letter-spacing: 0.04em; text-transform: none; font-size: 14px; }
+
 /* act 3: three local scenes open */
 .ci-panels { display: flex; place-items: stretch; }
-.ci-panels figure { position: relative; flex: 1; margin: 0; overflow: hidden; clip-path: inset(100% 0 0 0); animation: ci-open 1s cubic-bezier(0.6, 0, 0.2, 1) calc(4.55s + var(--i) * 0.22s) forwards; }
+.ci-panels figure { position: relative; flex: 1; margin: 0; overflow: hidden; clip-path: inset(100% 0 0 0); animation: ci-open 1s cubic-bezier(0.6, 0, 0.2, 1) calc(7.55s + var(--i) * 0.22s) forwards; }
 .ci-panels figure + figure { border-left: 1px solid rgba(247, 242, 232, 0.25); }
 @keyframes ci-open { to { clip-path: inset(0 0 0 0); } }
-.ci-img { position: absolute; inset: -2% -6%; background: #13235f; animation: ci-drift 4.6s linear 4.55s both; }
+.ci-img { position: absolute; inset: -2% -6%; background: #13235f; animation: ci-drift 4.6s linear 7.55s both; }
 .ci-img img { object-fit: cover; }
 @keyframes ci-drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
 .ci-panels figure::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(6, 12, 38, 0.85)); }
-.ci-panels figcaption { position: absolute; z-index: 1; left: clamp(18px, 2.4vw, 36px); right: 18px; bottom: clamp(24px, 4vh, 48px); display: grid; gap: 8px; animation: ci-rise 0.7s var(--ease) calc(5.15s + var(--i) * 0.22s) both; }
+.ci-panels figcaption { position: absolute; z-index: 1; left: clamp(18px, 2.4vw, 36px); right: 18px; bottom: clamp(24px, 4vh, 48px); display: grid; gap: 8px; animation: ci-rise 0.7s var(--ease) calc(8.15s + var(--i) * 0.22s) both; }
 .ci-panels figcaption span { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
 .ci-panels figcaption b { font: 500 clamp(20px, 2vw, 30px)/1.15 var(--font-display, "Fraunces Variable"), Georgia, serif; }
-.ci-panels::after { content: ""; position: absolute; inset: 0; background: rgba(6, 12, 38, 0.74); opacity: 0; animation: ci-fade-in 0.7s ease 6.55s forwards; }
+.ci-panels::after { content: ""; position: absolute; inset: 0; background: rgba(6, 12, 38, 0.74); opacity: 0; animation: ci-fade-in 0.7s ease 9.55s forwards; }
 
 /* act 4: the name lands */
 .ci-title { gap: 18px; text-align: center; padding: 0 24px; }
-.ci-hello { font-family: "Noto Sans Telugu", "Noto Sans Devanagari", "Noto Naskh Arabic", system-ui, sans-serif; font-size: clamp(22px, 2.4vw, 32px); color: var(--gold); animation: ci-rise 0.8s var(--ease) 6.75s both; }
+.ci-hello { font-family: "Noto Sans Telugu", "Noto Sans Devanagari", "Noto Naskh Arabic", system-ui, sans-serif; font-size: clamp(22px, 2.4vw, 32px); color: var(--gold); animation: ci-rise 0.8s var(--ease) 9.75s both; }
 .ci-name { display: block; font: 500 clamp(52px, 10vw, 156px)/1.05 var(--font-display, "Fraunces Variable"), Georgia, serif; letter-spacing: -0.02em; overflow: hidden; padding: 0.06em 0 0.12em; }
-.ci-name span { display: inline-block; transform: translateY(110%); animation: ci-letter 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(6.95s + var(--i) * 0.045s) forwards; }
+.ci-name span { display: inline-block; transform: translateY(110%); animation: ci-letter 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(9.95s + var(--i) * 0.045s) forwards; }
 @keyframes ci-letter { to { transform: none; } }
-.ci-state { display: inline-flex; align-items: center; justify-content: center; gap: 16px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(247, 242, 232, 0.8); animation: ci-rise 0.7s var(--ease) 7.5s both; }
+.ci-state { display: inline-flex; align-items: center; justify-content: center; gap: 16px; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(247, 242, 232, 0.8); animation: ci-rise 0.7s var(--ease) 10.5s both; }
 .ci-state i { width: 40px; height: 1px; background: var(--saffron); }
 html[lang^="te"] :is(.ci-state, .ci-caption, .ci-panels figcaption span), html[lang^="hi"] :is(.ci-state, .ci-caption, .ci-panels figcaption span) { letter-spacing: 0.04em; text-transform: none; font-size: 14px; }
 html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-spacing: 0; }
-.ci-name .ci-whole { transform: none; opacity: 0; animation: ci-rise 1s var(--ease) 6.95s forwards; }
+.ci-name .ci-whole { transform: none; opacity: 0; animation: ci-rise 1s var(--ease) 9.95s forwards; }
 
 /* skip */
 .ci-skip { position: absolute; z-index: 5; right: clamp(16px, 3vw, 40px); bottom: clamp(16px, 4vh, 40px); display: grid; gap: 8px; background: rgba(6, 12, 38, 0.35); border: 1px solid rgba(247, 242, 232, 0.35); color: var(--ivory); font: 600 13px/1 var(--font-body, Inter), sans-serif; letter-spacing: 0.08em; padding: 12px 18px 10px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px); }
 .ci-skip:hover, .ci-skip:focus-visible { background: var(--ivory); color: var(--navy); }
 .ci-bar { display: block; height: 2px; background: rgba(247, 242, 232, 0.2); border-radius: 2px; overflow: hidden; }
-.ci-bar span { display: block; height: 100%; background: var(--saffron); transform-origin: left; transform: scaleX(0); animation: ci-progress 8.4s linear both; }
+.ci-bar span { display: block; height: 100%; background: var(--saffron); transform-origin: left; transform: scaleX(0); animation: ci-progress 11.4s linear both; }
 @keyframes ci-progress { to { transform: scaleX(1); } }
 @media (max-width: 640px) {
   .ci-panels { flex-direction: column; }
@@ -1339,3 +1369,26 @@ html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-
   .ci-panels figcaption { bottom: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { html[data-intro] .ci { display: none; } html[data-intro] { overflow: auto; } }
+
+/* greeting sound */
+.sayit { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; margin-top: 6px; padding: 8px 16px 8px 8px; border-radius: 999px; border: 1px solid rgba(11, 23, 69, 0.18); background: rgba(255, 255, 255, 0.55); color: var(--navy); font: 600 14px/1 var(--font-body); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.sayit:hover { background: #fff; border-color: rgba(11, 23, 69, 0.35); }
+.sayit:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+.sayit-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: var(--ivory); }
+.sayit.on .sayit-icon { background: var(--saffron); }
+.sayit-wave { display: inline-flex; align-items: center; gap: 3px; height: 18px; }
+.sayit-wave i { width: 3px; height: 8px; border-radius: 2px; background: var(--saffron); opacity: 0.75; }
+.sayit-wave i:nth-child(2) { height: 14px; } .sayit-wave i:nth-child(3) { height: 18px; } .sayit-wave i:nth-child(4) { height: 11px; } .sayit-wave i:nth-child(5) { height: 6px; }
+.sayit.on .sayit-wave i { animation: sayit-bar 0.9s ease-in-out calc(var(--i) * -0.18s) infinite alternate; }
+@keyframes sayit-bar { from { transform: scaleY(0.4); } to { transform: scaleY(1.6); } }
+@media (prefers-reduced-motion: reduce) { .sayit.on .sayit-wave i { animation: none; opacity: 1; } }
+
+/* wide screens: wider layouts, and a faint brand doodle in the side margins of light sections */
+@media (min-width: 1500px) {
+  :is(.section, .section-sm, .dest-section):not([class*="bg-navy"]):not(.on-dark):not(.closing):not(.manifesto):not(.culture) {
+    background-color: var(--sbg, var(--paper));
+    background-image: linear-gradient(90deg, transparent 0, var(--sbg, var(--paper)) calc((100% - var(--wrap)) / 2 + 24px), var(--sbg, var(--paper)) calc((100% + var(--wrap)) / 2 - 24px), transparent 100%), url("/img/doodles-faint.svg");
+    background-size: auto, 240px 240px;
+  }
+  .bg-ivory, .dest-section { --sbg: var(--ivory); }
+}
