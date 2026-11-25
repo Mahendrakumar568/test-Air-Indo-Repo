@@ -11,9 +11,10 @@ export async function generateMetadata({ params }: PageProps) {
   return isLocale(locale) ? pageMeta(locale, "/about", { page: "about" }) : {};
 }
 
-const valueIcons: IconName[] = ["route", "plane", "pin", "shield", "clock", "spark"];
 const safetyIcons: IconName[] = ["plane", "people", "shield"];
 const audienceLinks = ["/investors#deck", "/contact?topic=partnership", "/careers", "/newsroom"];
+
+const ticketCodes = ["AI · INV", "AI · PTR", "AI · CRW", "AI · PRS"];
 
 export default async function About({ params }: PageProps) {
   const { locale, t } = await resolve(params);
@@ -47,21 +48,22 @@ export default async function About({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="section bg-ivory">
-        <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 56 }}>
+      <section className="section bg-ivory vals" aria-labelledby="vals-title">
+        <div className="wrap vals-grid">
+          <div className="vals-head reveal">
             <span className="kicker">{a.valuesKicker}</span>
-            <h2 className="h2">{a.valuesTitle}</h2>
+            <h2 id="vals-title" className="h2">{a.valuesTitle}</h2>
+            <img className="vals-mark" src="/brand/air-indo-symbol-colour.svg" alt="" width={240} height={242} />
           </div>
-          <div className="grid g3">
+          <ol className="vals-list">
             {a.values.map(([title, body], i) => (
-              <div key={title} className={`card-line reveal${i < 3 ? " saffron" : ""}`}>
-                <div className="icon-badge"><Icon name={valueIcons[i]} /></div>
+              <li key={title} className={`reveal${i < 3 ? " core" : ""}`}>
+                <span className="vals-n tnum">{String(i + 1).padStart(2, "0")}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -91,14 +93,19 @@ export default async function About({ params }: PageProps) {
             <span className="kicker">{h.audienceKicker}</span>
             <h2 id="aud-title" className="h2">{h.audienceTitle}</h2>
           </div>
-          <ul className="rows">
+          <ul className="tickets">
             {h.audiences.map(([title, body, cta], i) => (
-              <li key={title} className="reveal">
-                <Link href={L(audienceLinks[i])} className="row-link">
-                  <span className="num">0{i + 1}</span>
-                  <span className="row-title">{title}</span>
-                  <span className="row-body">{body}</span>
-                  <span className="row-cta">{cta} <Icon name="arrow" size={18} /></span>
+              <li key={title} className="reveal" style={{ ["--i" as string]: i }}>
+                <Link href={L(audienceLinks[i])} className="ticket">
+                  <span className="tk-main">
+                    <span className="tk-top"><span className="tk-n tnum">0{i + 1}</span><span className="tk-code">{ticketCodes[i]}</span></span>
+                    <span className="tk-title">{title}</span>
+                    <span className="tk-body">{body}</span>
+                  </span>
+                  <span className="tk-stub">
+                    <span className="tk-bars" aria-hidden="true" />
+                    <span className="tk-cta">{cta} <Icon name="arrow" size={18} /></span>
+                  </span>
                 </Link>
               </li>
             ))}
