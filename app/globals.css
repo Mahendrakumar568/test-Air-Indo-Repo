@@ -1162,3 +1162,16 @@ a:hover .media img, a:hover .media.reveal.in img, .mosaic .media:hover img, .mos
 .dest-section:has(.hs.pinned) { padding: 0; }
 .cine-step { min-height: calc(var(--stage-h) * 0.78); }
 .cine-step:first-child { min-height: var(--stage-h); }
+
+/* compact footer: wordmark sits behind the link columns as a watermark */
+.site-footer { padding: clamp(44px, 5vw, 64px) 0 24px; }
+.footer-top { position: relative; isolation: isolate; }
+.footer-top .footer-mark { position: absolute; z-index: -1; left: 50%; bottom: -0.12em; transform: translateX(-50%); margin: 0; width: 100%; pointer-events: none; font-size: clamp(88px, 16vw, 240px); background: linear-gradient(180deg, rgba(247, 242, 232, 0.09), rgba(247, 242, 232, 0.015)); -webkit-background-clip: text; background-clip: text; }
+.footer-grid ul { margin-top: 12px; gap: 8px; }
+.footer-legal { margin-top: 32px; padding-top: 18px; gap: 10px; font-size: 12.5px; }
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 16px; }
+  .footer-brand p { margin-top: 12px; font-size: 14px; }
+  .footer-grid a { font-size: 14px; }
+  .footer-top .footer-mark { bottom: -0.05em; font-size: 27vw; }
+}

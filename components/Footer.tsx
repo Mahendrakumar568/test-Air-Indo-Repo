@@ -11,6 +11,8 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
     <FooterCta href={l("/#waitlist")} title={t.home.closingTitle} lead={t.home.closingLead} cta={t.nav.joinWaitlist} />
     <footer className="site-footer">
       <div className="wrap">
+        <div className="footer-top">
+        <p className="footer-mark" aria-hidden="true">Air Indo</p>
         <div className="footer-grid">
           <div className="footer-brand">
             <img src="/brand/air-indo-lockup-reversed.svg" alt="Air Indo · Fly Beyond" width={212} height={44} loading="lazy" />
@@ -44,16 +46,13 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
             </ul>
           </div>
         </div>
-        <p className="footer-mark" aria-hidden="true">Air Indo</p>
+        </div>
         <div className="footer-legal">
           <p>
             <strong>{t.footer.regulatoryTitle}</strong> {t.common.notice}
           </p>
           <div className="footer-bottom">
             <span>© {year} Air Indo Airlines. {t.footer.rights}</span>
-            <span>
-              <Link href={l("/privacy")}>{t.footer.privacy}</Link> · <Link href={l("/terms")}>{t.footer.terms}</Link>
-            </span>
           </div>
         </div>
       </div>
