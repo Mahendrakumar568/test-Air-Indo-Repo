@@ -4,7 +4,10 @@ import { pageMeta } from "@/lib/seo";
 import { isLocale } from "@/lib/i18n";
 import { cityList, connectionsOf } from "@/lib/data";
 import { PageHero } from "@/components/PageHero";
-import { Img } from "@/components/Img";
+import Image from "next/image";
+import { images } from "@/lib/images";
+import { alts } from "@/lib/alts";
+import { Icon } from "@/components/Icon";
 import { CinematicNetwork } from "@/components/CinematicNetwork";
 import { RouteExplorer } from "@/components/RouteExplorer";
 
@@ -29,18 +32,21 @@ export default async function Routes({ params }: PageProps) {
       <section className="section bg-ivory">
         <div className="wrap">
           <div className="head reveal" style={{ marginBottom: 48 }}>
-            <span className="kicker">{r.destinationsTitle}</span>
-            <h2 className="h2">{t.routes.title}</h2>
+            <span className="kicker">{r.kicker}</span>
+            <h2 className="h2">{r.destinationsTitle}</h2>
           </div>
           <div className="grid g3">
-            {cityList.map((c) => (
-              <Link key={c.code} href={`/${locale}/routes/${c.slug}`} className="dest-card reveal">
-                <div className="media"><Img slot={c.code} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px" /></div>
-                <div className="meta">
-                  <h3>{names[c.code]}</h3>
-                  <span className="code">{c.code}</span>
-                </div>
-                <p>{t.cities[c.code].state} · {r.nonstop}: {connectionsOf(c.code).map((x) => names[x]).join(", ")}</p>
+            {cityList.map((c, i) => (
+              <Link key={c.code} href={`/${locale}/routes/${c.slug}`} className="rail-card reveal">
+                <Image src={images[c.code].src} alt={alts[c.code]} fill sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px" quality={75} />
+                <span className="rail-shade" />
+                <span className="rail-idx">0{i + 1}</span>
+                <span className="rail-meta">
+                  <span className="rail-state">{t.cities[c.code].state} · {c.code}</span>
+                  <span className="rail-name">{names[c.code]}</span>
+                  <span className="rail-tag">{r.nonstop}: {connectionsOf(c.code).map((x) => names[x]).join(", ")}</span>
+                </span>
+                <span className="rail-go" aria-hidden="true"><Icon name="arrow" size={18} /></span>
               </Link>
             ))}
           </div>
@@ -49,11 +55,10 @@ export default async function Routes({ params }: PageProps) {
       <section className="section">
         <div className="wrap split">
           <div className="head">
-            <span className="kicker">{r.notifyTitle}</span>
-            <h2 className="h2">{t.home.closingTitle}</h2>
+            <h2 className="h2">{r.notifyTitle}</h2>
             <p className="lead">{r.notifyLead}</p>
             <div className="btn-row" style={{ marginTop: 28 }}>
-              <Link href={`/${locale}#waitlist`} className="btn btn-primary">{t.nav.joinWaitlist}</Link>
+              <Link href={`/${locale}#waitlist`} className="btn btn-primary btn-lg">{t.nav.joinWaitlist} <Icon name="arrow" size={18} /></Link>
             </div>
           </div>
           <RouteExplorer

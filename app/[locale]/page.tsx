@@ -2,13 +2,15 @@ import Link from "next/link";
 import { resolve, type PageProps } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
 import { isLocale } from "@/lib/i18n";
-import { cityList } from "@/lib/data";
+import { cityList, fleetSpecs } from "@/lib/data";
 import { Img } from "@/components/Img";
 import { Icon, type IconName } from "@/components/Icon";
 import { CinematicNetwork } from "@/components/CinematicNetwork";
 import { RouteExplorer } from "@/components/RouteExplorer";
+import { DestinationRail } from "@/components/DestinationRail";
 import { Timeline } from "@/components/Timeline";
 import { FlightLines } from "@/components/FlightLines";
+import { keep } from "@/lib/keep";
 import { WaitlistForm } from "@/components/forms/WaitlistForm";
 
 export async function generateMetadata({ params }: PageProps) {
@@ -27,22 +29,24 @@ export default async function Home({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="hero">
-        <div className="hero-media">
+      <section className="hero hero-grand">
+        <div className="hero-media kb">
           <Img slot="hero" priority sizes="100vw" />
         </div>
         <div className="wrap hero-inner">
           <p className="hello" lang="te">{t.common.welcome}</p>
-          <span className="kicker" style={{ color: "var(--gold)" }}>{h.kicker}</span>
-          <h1 className="h1" style={{ marginTop: 16 }}>
+          <span className="kicker">{h.kicker}</span>
+          <h1 className="h1 display-xl">
             {h.title[0]} <span className="accent">{h.title[1]}</span>
           </h1>
           <p className="lead">{h.lead}</p>
           <div className="btn-row">
-            <a href="#waitlist" className="btn btn-primary">{h.ctaPrimary}</a>
-            <Link href={L("/routes")} className="btn btn-ghost-light">{h.ctaSecondary}</Link>
+            <a href="#waitlist" className="btn btn-primary btn-lg">{h.ctaPrimary} <Icon name="arrow" size={18} /></a>
+            <Link href={L("/routes")} className="btn btn-glass btn-lg">{h.ctaSecondary}</Link>
           </div>
-          <dl className="hero-stats">
+        </div>
+        <div className="hero-bar">
+          <dl className="wrap hero-stats">
             {h.stats.map(([n, label]) => (
               <div key={label}>
                 <dt className="sr-only">{label}</dt>
@@ -51,6 +55,7 @@ export default async function Home({ params }: PageProps) {
             ))}
           </dl>
         </div>
+        <span className="scroll-cue" aria-hidden="true"><i /></span>
       </section>
 
       {/* Network */}
@@ -62,88 +67,130 @@ export default async function Home({ params }: PageProps) {
         labels={{ corridor: t.routes.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes, ...t.routes.cine }}
       />
 
+      {/* Manifesto */}
+      <section className="manifesto" aria-labelledby="manifesto-title">
+        <div className="wrap center reveal">
+          <img className="manifesto-mark" src="/brand/air-indo-symbol-colour.svg" alt="" width={72} height={72} loading="lazy" />
+          <span className="kicker">{t.about.kicker}</span>
+          <blockquote>
+            <p id="manifesto-title" className="manifesto-quote">&ldquo;{t.about.founderQuote}&rdquo;</p>
+            <footer>
+              <b>{t.about.founderName}</b> · {t.about.founderRole}
+            </footer>
+          </blockquote>
+          <ul className="manifesto-values">
+            {t.about.values.slice(0, 3).map(([title]) => (
+              <li key={title}>{title}</li>
+            ))}
+          </ul>
+          <Link href={L("/about")} className="link-arrow" style={{ marginTop: 40 }}>{t.common.readMore} <Icon name="arrow" size={18} /></Link>
+        </div>
+      </section>
+
       {/* Destinations */}
-      <section className="section-sm bg-ivory" aria-labelledby="dest-title">
+      <section className="section dest-section" aria-labelledby="dest-title">
         <div className="wrap">
           <div className="head-row reveal">
             <div className="head">
               <span className="kicker">{t.routes.destinationsTitle}</span>
-              <h2 id="dest-title" className="h2" style={{ marginTop: 12 }}>{t.routes.title}</h2>
+              <h2 id="dest-title" className="h2">{t.routes.title}</h2>
             </div>
             <Link href={L("/routes")} className="link-arrow">{t.common.allRoutes} <Icon name="arrow" size={18} /></Link>
           </div>
-          <div className="grid g3">
-            {cityList.map((c) => (
-              <Link key={c.code} href={L(`/routes/${c.slug}`)} className="dest-card reveal">
-                <div className="media"><Img slot={c.code} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 400px" /></div>
-                <div className="meta">
-                  <h3>{names[c.code]}</h3>
-                  <span className="code">{c.code}</span>
-                </div>
-                <p>{t.cities[c.code].tagline}</p>
-              </Link>
-            ))}
+        </div>
+        <div className="reveal">
+          <DestinationRail
+            prev={t.common.prev}
+            next={t.common.next}
+            items={cityList.map((c) => ({
+              code: c.code,
+              href: L(`/routes/${c.slug}`),
+              name: names[c.code],
+              tagline: t.cities[c.code].tagline,
+              state: t.cities[c.code].state,
+            }))}
+          />
+        </div>
+      </section>
+
+      {/* Fleet */}
+      <section className="cinema" aria-labelledby="fleet-title">
+        <div className="cinema-media kb-scroll"><Img slot="fleet" sizes="100vw" /></div>
+        <div className="wrap cinema-copy on-dark">
+          <div className="reveal">
+            <span className="kicker">{h.fleetKicker}</span>
+            <h2 id="fleet-title" className="h2 display-lg">{keep(h.fleetTitle)}</h2>
+            <p className="lead">{h.fleetLead}</p>
           </div>
+          <dl className="cinema-specs reveal">
+            {fleetSpecs.slice(0, 3).map((s) => (
+              <div key={s.key}>
+                <dt>{t.fleet.specs[s.key as keyof typeof t.fleet.specs]}</dt>
+                <dd>{s.value}</dd>
+              </div>
+            ))}
+            <div className="cinema-link">
+              <Link href={L("/fleet")} className="link-arrow">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
+            </div>
+          </dl>
         </div>
       </section>
 
       {/* Why */}
       <section className="section" aria-labelledby="why-title">
-        <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 56 }}>
-            <span className="kicker">{h.whyKicker}</span>
-            <h2 id="why-title" className="h2">{h.whyTitle}</h2>
+        <div className="wrap why-split">
+          <div className="why-aside">
+            <div className="head reveal">
+              <span className="kicker">{h.whyKicker}</span>
+              <h2 id="why-title" className="h2">{h.whyTitle}</h2>
+            </div>
+            <div className="media r-4-5 reveal why-photo"><Img slot="boarding" sizes="(max-width: 960px) 100vw, 480px" /></div>
           </div>
-          <div className="grid g4">
+          <ol className="num-list">
             {h.why.map(([title, body], i) => (
-              <div key={title} className="card-line reveal">
-                <div className="icon-badge"><Icon name={whyIcons[i]} /></div>
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </div>
+              <li key={title} className="reveal">
+                <span className="num-big">0{i + 1}</span>
+                <div>
+                  <h3><span className="ico"><Icon name={whyIcons[i]} size={22} /></span>{title}</h3>
+                  <p>{body}</p>
+                </div>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Fleet */}
-      <section className="feature-band bg-navy" aria-labelledby="fleet-title">
-        <div className="media"><Img slot="fleet" sizes="(max-width: 900px) 100vw, 50vw" /></div>
-        <div className="feature-copy on-dark">
-          <span className="kicker">{h.fleetKicker}</span>
-          <h2 id="fleet-title" className="h2" style={{ marginTop: 14 }}>{h.fleetTitle}</h2>
-          <p className="lead" style={{ marginTop: 20 }}>{h.fleetLead}</p>
-          <div style={{ marginTop: 32 }}>
-            <Link href={L("/fleet")} className="link-arrow">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
-          </div>
+          </ol>
         </div>
       </section>
 
       {/* Experience */}
-      <section className="feature-band reverse" aria-labelledby="exp-title">
-        <div className="media"><Img slot="meal" sizes="(max-width: 900px) 100vw, 50vw" /></div>
-        <div className="feature-copy bg-ivory">
-          <span className="kicker">{h.experienceKicker}</span>
-          <h2 id="exp-title" className="h2" style={{ marginTop: 14 }}>{h.experienceTitle}</h2>
-          <p className="lead" style={{ marginTop: 20 }}>{h.experienceLead}</p>
-          <div style={{ marginTop: 32 }}>
+      <section className="section bg-ivory experience-band" aria-labelledby="exp-title">
+        <div className="wrap">
+          <div className="head-row reveal">
+            <div className="head">
+              <span className="kicker">{h.experienceKicker}</span>
+              <h2 id="exp-title" className="h2">{h.experienceTitle}</h2>
+              <p className="lead">{h.experienceLead}</p>
+            </div>
             <Link href={L("/experience")} className="link-arrow">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
+          </div>
+          <div className="mosaic">
+            <div className="media m-a reveal"><Img slot="cabin" sizes="(max-width: 960px) 100vw, 720px" /></div>
+            <div className="media m-b reveal"><Img slot="meal" sizes="(max-width: 960px) 100vw, 480px" /></div>
+            <div className="media m-c reveal"><Img slot="crew" sizes="(max-width: 960px) 100vw, 480px" /></div>
           </div>
         </div>
       </section>
 
       {/* Cargo */}
-      <section className="section-sm bg-white border-y" aria-labelledby="cargo-title">
+      <section className="section cargo-band" aria-labelledby="cargo-title">
         <div className="wrap split">
+          <div className="media r-4-3 reveal cargo-photo"><Img slot="cargo" sizes="(max-width: 960px) 100vw, 640px" /></div>
           <div className="reveal">
             <span className="kicker">{h.cargoKicker}</span>
-            <h2 id="cargo-title" className="h2" style={{ marginTop: 14 }}>{h.cargoTitle}</h2>
-            <p className="lead" style={{ marginTop: 20 }}>{h.cargoLead}</p>
-            <div className="btn-row" style={{ marginTop: 28 }}>
-              <Link href={L("/cargo")} className="btn btn-ghost">{t.common.learnMore}</Link>
+            <h2 id="cargo-title" className="h2">{h.cargoTitle}</h2>
+            <p className="lead">{h.cargoLead}</p>
+            <div className="btn-row" style={{ marginTop: 32 }}>
+              <Link href={L("/cargo")} className="btn btn-ghost">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
             </div>
           </div>
-          <div className="media r-3-2 reveal"><Img slot="cargo" sizes="(max-width: 960px) 100vw, 560px" /></div>
         </div>
       </section>
 
@@ -163,27 +210,28 @@ export default async function Home({ params }: PageProps) {
       {/* Audiences */}
       <section className="section" aria-labelledby="aud-title">
         <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 48 }}>
+          <div className="head reveal" style={{ marginBottom: 40 }}>
             <span className="kicker">{h.audienceKicker}</span>
             <h2 id="aud-title" className="h2">{h.audienceTitle}</h2>
           </div>
-          <div className="grid g4">
+          <ul className="rows">
             {h.audiences.map(([title, body, cta], i) => (
-              <div key={title} className="card reveal" style={{ display: "flex", flexDirection: "column" }}>
-                <span className="num">0{i + 1}</span>
-                <h3 style={{ marginTop: 12 }}>{title}</h3>
-                <p style={{ flex: 1 }}>{body}</p>
-                <Link href={L(audienceLinks[i])} className="link-arrow" style={{ marginTop: 20, alignSelf: "flex-start" }}>
-                  {cta} <Icon name="arrow" size={18} />
+              <li key={title} className="reveal">
+                <Link href={L(audienceLinks[i])} className="row-link">
+                  <span className="num">0{i + 1}</span>
+                  <span className="row-title">{title}</span>
+                  <span className="row-body">{body}</span>
+                  <span className="row-cta">{cta} <Icon name="arrow" size={18} /></span>
                 </Link>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* Waitlist */}
-      <section id="waitlist" className="section bg-ivory feather-field feather-light" aria-labelledby="wl-title">
+      <section id="waitlist" className="section closing on-dark" aria-labelledby="wl-title">
+        <div className="closing-media" aria-hidden="true"><Img slot="arrival" alt="" sizes="100vw" /></div>
         <div className="wrap split split-top">
           <div className="stack" style={{ ["--gap" as string]: "24px" }}>
             <span className="kicker">{t.forms.waitlist.title}</span>

@@ -24,13 +24,13 @@ export default async function About({ params }: PageProps) {
         <div className="wrap split split-top">
           <div className="stack reveal" style={{ ["--gap" as string]: "22px" }}>
             {a.story.map((p, i) => (
-              <p key={i} className={i === 0 ? "lead" : "body"} style={i === 0 ? { color: "var(--ink)" } : { fontSize: 17 }}>
+              <p key={i} className={i === 0 ? "story-lead" : "body"} style={i === 0 ? undefined : { fontSize: 17.5, lineHeight: 1.75 }}>
                 {p}
               </p>
             ))}
           </div>
           <figure className="reveal">
-            <div className="media r-4-5" style={{ background: "var(--navy)", display: "grid", placeItems: "center" }}>
+            <div className="media r-4-5 symbol-panel">
               <img src="/brand/air-indo-symbol-reversed.svg" alt="" width={240} height={243} style={{ width: "44%", height: "auto" }} />
             </div>
             <blockquote style={{ marginTop: 28 }}>

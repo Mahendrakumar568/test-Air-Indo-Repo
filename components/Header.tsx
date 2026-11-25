@@ -15,6 +15,14 @@ const items = ["about", "routes", "fleet", "experience", "cargo", "investors", "
 export function Header({ locale, t }: { locale: Locale; t: NavLabels }) {
   const pathname = usePathname() || `/${locale}`;
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 8);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -39,7 +47,7 @@ export function Header({ locale, t }: { locale: Locale; t: NavLabels }) {
   ));
 
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? " scrolled" : ""}`}>
       <div className="wrap nav">
         <Link href={`/${locale}`} className="brand" aria-label={`Air Indo, ${t.home}`}>
           <img src="/brand/air-indo-lockup-colour.svg" alt="Air Indo · Fly Beyond" width={183} height={38} />

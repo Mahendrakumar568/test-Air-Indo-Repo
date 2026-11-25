@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import type { Dict } from "@/lib/dict/en";
+import { FooterCta } from "./FooterCta";
 
 export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
   const l = (p: string) => `/${locale}${p}`;
   const year = new Date().getFullYear();
   return (
+    <>
+    <FooterCta href={l("/#waitlist")} title={t.home.closingTitle} lead={t.home.closingLead} cta={t.nav.joinWaitlist} />
     <footer className="site-footer">
       <div className="wrap">
         <div className="footer-grid">
@@ -41,6 +44,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
             </ul>
           </div>
         </div>
+        <p className="footer-mark" aria-hidden="true">Air Indo</p>
         <div className="footer-legal">
           <p>
             <strong>{t.footer.regulatoryTitle}</strong> {t.common.notice}
@@ -54,5 +58,6 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
         </div>
       </div>
     </footer>
+    </>
   );
 }

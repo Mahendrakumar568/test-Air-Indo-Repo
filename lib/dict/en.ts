@@ -58,6 +58,9 @@ const en = {
     notice:
       "Air Indo has not started commercial operations. Routes, fleet and schedules shown are proposed and subject to approval by the Directorate General of Civil Aviation (DGCA). We are not taking bookings yet.",
     toBeConfirmed: "To be confirmed",
+    prev: "Previous",
+    next: "Next",
+    nextDestination: "Next destination",
     welcome: "స్వాగతం · Welcome aboard",
   },
   footer: {

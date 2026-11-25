@@ -93,11 +93,24 @@ export default async function CityPage({ params }: Props) {
           </div>
         </div>
       </section>
-      <section className="section-sm bg-ivory">
-        <div className="wrap">
-          <p className="fine">{t.common.notice}</p>
-        </div>
-      </section>
+      {(() => {
+        const i = cityList.findIndex((x) => x.code === c.code);
+        const n = cityList[(i + 1) % cityList.length];
+        return (
+          <Link href={`/${locale}/routes/${n.slug}`} className="next-band">
+            <span className="next-media"><Img slot={n.code} sizes="100vw" alt="" /></span>
+            <span className="wrap next-copy">
+              <span className="kicker">{t.common.nextDestination}</span>
+              <span className="next-name">{names[n.code]}</span>
+              <span className="next-tag">{t.cities[n.code].tagline}</span>
+            </span>
+            <span className="next-go" aria-hidden="true"><Icon name="arrow" size={26} /></span>
+          </Link>
+        );
+      })()}
+      <div className="wrap" style={{ paddingBlock: 28 }}>
+        <p className="fine">{t.common.notice}</p>
+      </div>
     </>
   );
 }
