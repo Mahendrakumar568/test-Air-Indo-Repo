@@ -1,7 +1,7 @@
 import { resolve, type PageProps } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
 import { isLocale } from "@/lib/i18n";
-import { phases } from "@/lib/data";
+import { FleetGrowth } from "@/components/FleetGrowth";
 import { PageHero } from "@/components/PageHero";
 import { SeatMap } from "@/components/SeatMap";
 import { SpecSheet } from "@/components/SpecSheet";
@@ -87,33 +87,7 @@ export default async function Fleet({ params }: PageProps) {
             <span className="kicker">ATR 72-600</span>
             <h2 id="grow-title" className="h2">{f.phasesTitle}</h2>
           </div>
-          <ol className="grow reveal">
-            {phases.map((p, i) => {
-              const [title, body] = f.phases[p.key];
-              const [phase, years] = title.includes(" · ") ? title.split(" · ") : ["", title];
-              const count = parseInt(p.aircraft, 10);
-              const more = p.aircraft.endsWith("+");
-              return (
-                <li key={p.key} style={{ ["--i" as string]: i }}>
-                  <div className="grow-count">
-                    <b className="tnum">{p.aircraft}</b>
-                    <span>{f.aircraft}</span>
-                  </div>
-                  <div className="grow-planes" aria-hidden="true">
-                    {Array.from({ length: count + (more ? 1 : 0) }, (_, k) => (
-                      <svg key={k} viewBox="0 0 40 40" className={k >= count ? "ghost" : ""} style={{ ["--k" as string]: k }}>
-                        <path d="M20 2c1.5 0 2.3 1.8 2.3 4.2V15l6-.1V12h2.6v2.9l7.1.1v4l-15.7 1.6v9.6l5 1.6v3l-7.3-.8-7.3.8v-3l5-1.6v-9.6L2 19v-4l7.1-.1V12h2.6v2.9l6 .1V6.2C17.7 3.8 18.5 2 20 2Z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="grow-tick" aria-hidden="true" />
-                  {phase && <span className="grow-phase">{phase}</span>}
-                  <h3>{years}</h3>
-                  <p>{body}</p>
-                </li>
-              );
-            })}
-          </ol>
+          <FleetGrowth phases={f.phases} aircraft={f.aircraft} />
         </div>
       </section>
     </>

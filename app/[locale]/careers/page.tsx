@@ -4,6 +4,7 @@ import { isLocale } from "@/lib/i18n";
 import { jobs } from "@/lib/data";
 import { PageHero } from "@/components/PageHero";
 import { Img } from "@/components/Img";
+import { Icon } from "@/components/Icon";
 import { JobList } from "@/components/JobList";
 import { CareerForm } from "@/components/forms/CareerForm";
 
@@ -11,6 +12,8 @@ export async function generateMetadata({ params }: PageProps) {
   const { locale } = await params;
   return isLocale(locale) ? pageMeta(locale, "/careers", { page: "careers", og: "careers" }) : {};
 }
+
+const cultureImages = ["crew", "careersTraining", "checkin"] as const;
 
 export default async function Careers({ params }: PageProps) {
   const { locale, t, names } = await resolve(params);
@@ -35,19 +38,22 @@ export default async function Careers({ params }: PageProps) {
         </div>
       </PageHero>
 
-      <section className="section">
+      <section className="section culture2" aria-labelledby="culture-title">
         <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 48 }}>
-            <h2 className="h2">{c.cultureTitle}</h2>
+          <div className="head reveal" style={{ marginBottom: 56 }}>
+            <span className="kicker">{c.kicker}</span>
+            <h2 id="culture-title" className="h2">{c.cultureTitle}</h2>
           </div>
-          <div className="grid g3">
-            {c.culture.map(([title, body]) => (
-              <div key={title} className="card-line saffron reveal">
+          <ol className="culture2-row">
+            {c.culture.map(([title, body], i) => (
+              <li key={title} className="reveal" style={{ ["--i" as string]: i }}>
+                <div className="media culture2-img"><Img slot={cultureImages[i]} sizes="(max-width: 960px) 100vw, 33vw" /></div>
+                <span className="culture2-n tnum">0{i + 1}</span>
                 <h3>{title}</h3>
                 <p>{body}</p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -86,11 +92,17 @@ export default async function Careers({ params }: PageProps) {
 
       <section className="section" id="apply">
         <div className="wrap split split-top">
-          <div className="head sticky-col">
-            <h2 className="h2">{c.applyTitle}</h2>
-            <p className="lead">{c.applyLead}</p>
-            <p className="fine" style={{ marginTop: 24 }}>{c.equal}</p>
-            <p className="notice-box" style={{ marginTop: 24 }}>{t.contact.faq[4][1]}</p>
+          <div className="apply-col reveal">
+            <div className="head">
+              <span className="kicker">{c.kicker}</span>
+              <h2 className="h2">{c.applyTitle}</h2>
+              <p className="lead">{c.applyLead}</p>
+            </div>
+            <figure className="media apply-photo">
+              <Img slot="boarding" sizes="(max-width: 960px) 100vw, 560px" />
+              <figcaption>{c.equal}</figcaption>
+            </figure>
+            <p className="apply-warn"><Icon name="shield" /> <span><b>{t.contact.faq[4][0]}</b> {t.contact.faq[4][1]}</span></p>
           </div>
           <div className="form-panel">
             {/* anchors so "Apply" links (#apply-<role>) scroll here and preselect the role */}

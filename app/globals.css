@@ -1622,3 +1622,75 @@ html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-
   .manifest-bar { padding: 12px 20px; }
 }
 :is(:lang(te), :lang(hi)) :is(.grow-count span, .grow-phase, .sc-l, .sheet-dims dt, .bp-dim text, .sheet-tag span) { letter-spacing: 0; text-transform: none; }
+
+/* ---------- Investors: the opportunity (quadrant) ---------- */
+.opp-quad { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.opp-axis { position: absolute; background: var(--mist); }
+.opp-axis.x { left: 0; right: 0; top: 50%; height: 1px; transform-origin: center; transform: scaleX(0); transition: transform 1.4s var(--ease) 0.1s; }
+.opp-axis.y { top: 0; bottom: 0; left: 50%; width: 1px; transform-origin: center; transform: scaleY(0); transition: transform 1.4s var(--ease) 0.1s; }
+.opp-quad.in .opp-axis { transform: none; }
+.opp-core { position: absolute; left: 50%; top: 50%; width: 92px; height: 92px; margin: -46px 0 0 -46px; display: grid; place-items: center; border-radius: 50%; background: var(--paper); border: 1px solid var(--mist); z-index: 1; opacity: 0; transform: scale(0.7); transition: opacity 0.6s 0.7s, transform 0.8s var(--ease) 0.7s; }
+.opp-core img { width: 46px; height: auto; }
+.opp-quad.in .opp-core { opacity: 1; transform: none; }
+.opp-cell { position: relative; padding: clamp(36px, 5vw, 64px) clamp(28px, 5vw, 72px); min-height: 280px; opacity: 0; transform: translateY(14px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); transition-delay: calc(0.5s + var(--i) * 0.12s); }
+.opp-quad.in .opp-cell { opacity: 1; transform: none; }
+.opp-cell:nth-of-type(odd) { padding-left: 0; }
+.opp-cell:nth-of-type(even) { padding-right: 0; }
+.opp-n { position: absolute; top: clamp(20px, 3vw, 40px); right: clamp(28px, 5vw, 72px); font-family: var(--font-display); font-size: clamp(64px, 7vw, 110px); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(16, 33, 92, 0.22); pointer-events: none; }
+.opp-cell:nth-of-type(even) .opp-n { right: 0; }
+.opp-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: var(--gold); }
+.opp-cell h3 { margin-top: 26px; font-size: clamp(26px, 2.4vw, 34px); max-width: 16ch; }
+.opp-cell p { margin-top: 12px; max-width: 44ch; color: var(--muted); font-size: 16px; line-height: 1.6; }
+
+/* ---------- Investors: how we build + snapshot ---------- */
+.build-col { display: flex; flex-direction: column; gap: 36px; align-self: stretch; }
+.build-list { list-style: none; margin: 0; padding: 0; }
+.build-list li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 8px; padding: 22px 0; border-top: 1px solid var(--mist); }
+.build-list li:last-child { border-bottom: 1px solid var(--mist); }
+.build-n { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: var(--saffron-d); padding-top: 6px; }
+.build-list h3 { font-size: 22px; }
+.build-list p { margin-top: 6px; color: var(--muted); font-size: 15.5px; line-height: 1.6; }
+.snapshot { margin-top: auto; background: var(--navy); color: var(--ivory); border-radius: 16px; overflow: hidden; background-image: radial-gradient(circle at 100% 0, rgba(232, 134, 42, 0.25), transparent 50%); }
+.snapshot-bar { display: flex; justify-content: space-between; padding: 14px 26px; border-bottom: 1px solid rgba(247, 242, 232, 0.14); font-size: 11.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 242, 232, 0.65); }
+.snapshot-bar span:last-child { color: var(--gold); }
+.snapshot dl { display: grid; grid-template-columns: 1fr 1fr; margin: 0; }
+.snapshot dl > div { padding: 24px 26px 26px; }
+.snapshot dl > div:nth-child(even) { border-left: 1px solid rgba(247, 242, 232, 0.14); }
+.snapshot dl > div:nth-child(n + 3) { border-top: 1px solid rgba(247, 242, 232, 0.14); }
+.snapshot dt { font-family: var(--font-display); font-size: clamp(40px, 4vw, 56px); line-height: 1; color: var(--white); }
+.snapshot dd { margin: 8px 0 0; font-size: 14px; color: #c9cee6; }
+
+/* ---------- Careers: what it's like (staggered photo columns) ---------- */
+.culture2-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.culture2-row li { transition-delay: calc(var(--i) * 0.14s); }
+.culture2-row li:nth-child(2) { margin-top: clamp(40px, 6vw, 96px); }
+.culture2-row li:nth-child(3) { margin-top: clamp(20px, 3vw, 48px); }
+.culture2-img { aspect-ratio: 4 / 5; border-radius: 18px; }
+.culture2-img img { position: absolute; inset: 0; transform: scale(1.08); transition: transform 1.6s var(--ease) calc(var(--i) * 0.14s); }
+.culture2-row li.in .culture2-img img { transform: none; }
+.culture2-row li:hover .culture2-img img { transform: scale(1.03); }
+.culture2-n { display: inline-block; margin-top: 22px; padding: 4px 10px; border: 1px solid var(--saffron); border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--saffron-d); }
+.culture2-row h3 { margin-top: 14px; font-size: clamp(24px, 2.2vw, 30px); }
+.culture2-row p { margin-top: 8px; color: var(--muted); font-size: 15.5px; line-height: 1.6; max-width: 36ch; }
+
+/* ---------- Careers: apply column ---------- */
+.apply-col { display: flex; flex-direction: column; gap: 28px; align-self: stretch; }
+.apply-photo { flex: 1; min-height: 280px; margin: 0; border-radius: 18px; }
+.apply-photo img { position: absolute; inset: 0; }
+.apply-photo figcaption { position: absolute; left: 16px; right: 16px; bottom: 16px; padding: 16px 18px; border-radius: 12px; background: rgba(11, 23, 69, 0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--ivory); font-size: 14.5px; line-height: 1.55; }
+.apply-warn { display: flex; gap: 12px; align-items: flex-start; margin: 0; padding: 16px 18px; border-radius: 12px; background: var(--ivory); border: 1px solid var(--mist); color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.apply-warn svg { flex: none; color: var(--saffron-d); margin-top: 2px; }
+
+@media (max-width: 960px) {
+  .opp-quad { grid-template-columns: 1fr; }
+  .opp-axis.y, .opp-core { display: none; }
+  .opp-axis.x { display: none; }
+  .opp-cell { padding: 32px 0 !important; min-height: 0; border-top: 1px solid var(--mist); }
+  .opp-n { right: 0 !important; top: 20px; font-size: 64px; }
+  .culture2-row { grid-template-columns: 1fr; }
+  .culture2-row li:nth-child(n) { margin-top: 0; }
+  .culture2-img { aspect-ratio: 16 / 10; }
+  .snapshot { margin-top: 0; }
+  .apply-photo { flex: none; min-height: 240px; }
+}
+.apply-warn b { color: var(--navy); font-weight: 600; }
