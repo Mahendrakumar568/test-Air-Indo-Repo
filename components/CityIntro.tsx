@@ -21,13 +21,12 @@ export type CityIntroProps = {
   panels: Panel[];
 };
 
-const key = (code: string) => `ai-intro-${code}`;
 
 /**
  * Opening sequence for a destination page, about nine seconds long:
  * the wing grows from its saffron point, the network finds the city, three local scenes open,
- * then the city's name lands and the curtain lifts. Plays once per visit, can be skipped,
- * and never plays with reduced motion. A tiny inline script decides before first paint,
+ * then the city's name lands and the curtain lifts. Plays on every visit (not on back/forward),
+ * can be skipped, and with reduced motion plays a calm version without the zooms. A tiny inline script decides before first paint,
  * so the page never flashes underneath.
  */
 export function CityIntro(p: CityIntroProps) {
@@ -35,17 +34,15 @@ export function CityIntro(p: CityIntroProps) {
 
   useEffect(() => {
     const html = document.documentElement;
+    const w = window as unknown as { __aiPop?: boolean; __aiNoIntro?: boolean };
     if (html.dataset.intro === p.code) {
       setOn(true);
-    } else {
-      let seen = true;
-      try { seen = !!sessionStorage.getItem(key(p.code)); } catch {}
-      if (!seen && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        try { sessionStorage.setItem(key(p.code), "1"); } catch {}
-        html.dataset.intro = p.code;
-        setOn(true);
-      }
+    } else if (!w.__aiPop && !w.__aiNoIntro) {
+      // Arrived by clicking a link inside the site: play it here too.
+      html.dataset.intro = p.code;
+      setOn(true);
     }
+    w.__aiPop = false;
     return () => { if (html.dataset.intro === p.code) delete html.dataset.intro; };
   }, [p.code]);
 
@@ -66,7 +63,8 @@ export function CityIntro(p: CityIntroProps) {
   const pad = 60;
   const box = `${Math.min(...xs) - pad} ${Math.min(...ys) - pad} ${Math.max(...xs) - Math.min(...xs) + pad * 2} ${Math.max(...ys) - Math.min(...ys) + pad * 2}`;
 
-  const boot = `(function(){try{var k=${JSON.stringify(key(p.code))};if(matchMedia('(prefers-reduced-motion: reduce)').matches||sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');document.documentElement.dataset.intro=${JSON.stringify(p.code)};}catch(e){}})();`;
+  // Plays on every visit except coming back with the browser's back/forward buttons.
+  const boot = `(function(){try{var w=window;if(!w.__aiPopBound){w.__aiPopBound=1;addEventListener('popstate',function(){w.__aiPop=true});}if(w.__aiNoIntro)return;var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='back_forward')return;document.documentElement.dataset.intro=${JSON.stringify(p.code)};}catch(e){}})();`;
 
   return (
     <>

@@ -507,7 +507,7 @@ html[lang^="te"] .footer-grid h2, html[lang^="hi"] .footer-grid h2 { letter-spac
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  :not(.ci, .ci *), :not(.ci, .ci *)::before, :not(.ci, .ci *)::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
 @media print {
@@ -1368,7 +1368,14 @@ html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-
   .ci-panels figure + figure { border-left: 0; border-top: 1px solid rgba(247, 242, 232, 0.25); }
   .ci-panels figcaption { bottom: 16px; }
 }
-@media (prefers-reduced-motion: reduce) { html[data-intro] .ci { display: none; } html[data-intro] { overflow: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  /* calm version: same story, cross-fades instead of zooms and streaks */
+  .ci-aerial { animation: ci-fade-in 1.2s ease 4.5s both; transform: none; filter: none; }
+  .ci-streaks, .ci-cloud.c2, .ci-cloud.c3 { display: none; }
+  .ci-cloud.c1 { animation: ci-fade-out 1.2s ease 4.9s forwards; transform: none; -webkit-mask-image: none; mask-image: none; }
+  .ci-img { animation: none; inset: 0; }
+  .ci-ring { animation: none; opacity: 0; }
+}
 
 /* greeting sound */
 .sayit { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; margin-top: 6px; padding: 8px 16px 8px 8px; border-radius: 999px; border: 1px solid rgba(11, 23, 69, 0.18); background: rgba(255, 255, 255, 0.55); color: var(--navy); font: 600 14px/1 var(--font-body); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
