@@ -86,25 +86,8 @@ function useMedia(query: string) {
 
 const usePrefersReducedMotion = () => useMedia("(prefers-reduced-motion: reduce)");
 
-function Counter({ value, run, format }: { value: number; run: boolean; format: (n: number) => string }) {
-  const [n, setN] = useState(value);
-  const reduced = usePrefersReducedMotion();
-  useEffect(() => {
-    if (!run || reduced) {
-      setN(value);
-      return;
-    }
-    let raf = 0;
-    const start = performance.now();
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / 1400);
-      setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [run, value, reduced]);
-  return <>{format(n)}</>;
+function Counter({ value, format }: { value: number; run?: boolean; format: (n: number) => string }) {
+  return <>{format(value)}</>;
 }
 
 const PLANE = "M9 0 L-2 -1.3 L-5 -7 L-7.2 -7 L-5.4 -1.3 L-9 -1.1 L-10.4 -3.6 L-11.8 -3.6 L-11 0 L-11.8 3.6 L-10.4 3.6 L-9 1.1 L-5.4 1.3 L-7.2 7 L-5 7 L-2 1.3 Z";

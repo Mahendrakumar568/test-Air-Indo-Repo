@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const NUM = /(?<![A-Za-z\d])\d[\d,]*(?![A-Za-z\d])/g;
 
 /** Wraps every word of a heading in two spans so CSS can lift the words in one after another. */
 function splitWords(el: HTMLElement) {
@@ -39,33 +38,9 @@ function splitWords(el: HTMLElement) {
   el.classList.add("wsplit");
 }
 
-/** Counts every number inside the element up from zero, keeping units and separators. */
-function countUp(el: HTMLElement) {
-  if (el.dataset.counted) return;
-  el.dataset.counted = "1";
-  const original = el.textContent || "";
-  const targets = Array.from(original.matchAll(NUM)).map((m) => m[0]);
-  if (!targets.length) return;
-  const start = performance.now();
-  const dur = 1600;
-  const tick = (t: number) => {
-    const p = Math.min(1, (t - start) / dur);
-    const e = 1 - Math.pow(1 - p, 4);
-    let k = 0;
-    el.textContent = original.replace(NUM, (m) => {
-      const n = Number(targets[k++].replace(/,/g, ""));
-      const v = Math.round(n * e);
-      return m.includes(",") ? v.toLocaleString("en-IN") : String(v);
-    });
-    if (p < 1) requestAnimationFrame(tick);
-    else el.textContent = original;
-  };
-  requestAnimationFrame(tick);
-}
-
 /**
  * Scroll-driven entrances: fades in .reveal blocks, lifts headline words in, wipes images open
- * and counts up [data-count] numbers. No-JS and reduced-motion users see everything at once.
+ *. No-JS and reduced-motion users see everything at once.
  */
 export function Reveal() {
   const pathname = usePathname();
@@ -73,7 +48,6 @@ export function Reveal() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const show = (el: Element) => {
       el.classList.add("in");
-      if (!reduced && (el as HTMLElement).dataset.count !== undefined) countUp(el as HTMLElement);
     };
     if (!reduced) {
       document.querySelectorAll<HTMLElement>("main :is(.h2, .h1, .display-xl, .manifesto-quote, .next-name)").forEach((el) => {

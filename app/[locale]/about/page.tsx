@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { resolve, type PageProps } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
 import { isLocale } from "@/lib/i18n";
@@ -12,10 +13,13 @@ export async function generateMetadata({ params }: PageProps) {
 
 const valueIcons: IconName[] = ["route", "plane", "pin", "shield", "clock", "spark"];
 const safetyIcons: IconName[] = ["plane", "people", "shield"];
+const audienceLinks = ["/investors#deck", "/contact?topic=partnership", "/careers", "/newsroom"];
 
 export default async function About({ params }: PageProps) {
-  const { t } = await resolve(params);
+  const { locale, t } = await resolve(params);
   const a = t.about;
+  const h = t.home;
+  const L = (p: string) => `/${locale}${p}`;
   return (
     <>
       <PageHero kicker={a.kicker} title={a.title} lead={a.lead} image="heritage" />
@@ -80,6 +84,28 @@ export default async function About({ params }: PageProps) {
           </div>
         </div>
       </section>
+      {/* Audiences */}
+      <section id="work-with-us" className="section" aria-labelledby="aud-title">
+        <div className="wrap">
+          <div className="head reveal" style={{ marginBottom: 40 }}>
+            <span className="kicker">{h.audienceKicker}</span>
+            <h2 id="aud-title" className="h2">{h.audienceTitle}</h2>
+          </div>
+          <ul className="rows">
+            {h.audiences.map(([title, body, cta], i) => (
+              <li key={title} className="reveal">
+                <Link href={L(audienceLinks[i])} className="row-link">
+                  <span className="num">0{i + 1}</span>
+                  <span className="row-title">{title}</span>
+                  <span className="row-body">{body}</span>
+                  <span className="row-cta">{cta} <Icon name="arrow" size={18} /></span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
     </>
   );
 }

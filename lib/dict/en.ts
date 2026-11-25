@@ -19,6 +19,7 @@ const en = {
     },
   },
   nav: {
+    more: "More",
     home: "Home",
     about: "Our story",
     routes: "Routes",
@@ -69,7 +70,7 @@ const en = {
     search: "Search roles",
     noResults: "No roles match. Try another word or team.",
     onThisPage: "On this page",
-    welcome: "స్వాగతం · Welcome aboard",
+    welcome: "Welcome aboard",
   },
   footer: {
     blurb: "A regional airline from Andhra Pradesh, built to connect every city that deserves to fly.",

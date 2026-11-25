@@ -20,7 +20,6 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 const whyIcons: IconName[] = ["fare", "shield", "route", "heart"];
-const audienceLinks = ["/investors#deck", "/contact?topic=partnership", "/careers", "/newsroom"];
 
 export default async function Home({ params }: PageProps) {
   const { locale, t, names } = await resolve(params);
@@ -30,14 +29,11 @@ export default async function Home({ params }: PageProps) {
   const index = [
     { id: "top", label: h.kicker },
     { id: "network", label: h.networkKicker },
-    { id: "story", label: t.about.kicker },
     { id: "destinations", label: t.routes.destinationsTitle },
+    { id: "story", label: t.about.kicker },
     { id: "fleet", label: h.fleetKicker },
     { id: "why", label: h.whyKicker },
-    { id: "onboard", label: h.experienceKicker },
-    { id: "cargo", label: t.nav.cargo },
     { id: "progress", label: h.journeyKicker },
-    { id: "work-with-us", label: h.audienceKicker },
     { id: "waitlist", label: t.nav.joinWaitlist },
   ];
 
@@ -50,7 +46,7 @@ export default async function Home({ params }: PageProps) {
           <Img slot="hero" priority sizes="100vw" />
         </div>
         <div className="wrap hero-inner">
-          <p className="hello" lang="te">{t.common.welcome}</p>
+          <p className="hello">{t.common.welcome}</p>
           <span className="kicker">{h.kicker}</span>
           <h1 className="h1 display-xl">
             {h.title[0]} <span className="accent">{h.title[1]}</span>
@@ -83,6 +79,30 @@ export default async function Home({ params }: PageProps) {
         labels={{ corridor: t.routes.corridorLabel, proposed: t.common.proposed, km: t.common.km, h: t.common.hours, min: t.common.minutes, ...t.routes.cine }}
       />
 
+      {/* Destinations */}
+      <section id="destinations" className="dest-section" aria-labelledby="dest-title">
+        <DestinationRail
+          head={
+            <div className="wrap">
+              <div className="head-row">
+                <div className="head">
+                  <span className="kicker">{t.routes.destinationsTitle}</span>
+                  <h2 id="dest-title" className="h2">{t.routes.title}</h2>
+                </div>
+                <Link href={L("/routes")} className="link-arrow">{t.common.allRoutes} <Icon name="arrow" size={18} /></Link>
+              </div>
+            </div>
+          }
+          items={cityList.map((c) => ({
+            code: c.code,
+            href: L(`/routes/${c.slug}`),
+            name: names[c.code],
+            tagline: t.cities[c.code].tagline,
+            state: t.cities[c.code].state,
+          }))}
+        />
+      </section>
+
       {/* Manifesto */}
       <section id="story" className="manifesto" aria-labelledby="manifesto-title">
         <div className="wrap center reveal">
@@ -100,45 +120,6 @@ export default async function Home({ params }: PageProps) {
             ))}
           </ul>
           <Link href={L("/about")} className="link-arrow" style={{ marginTop: 40 }}>{t.common.readMore} <Icon name="arrow" size={18} /></Link>
-        </div>
-      </section>
-
-      {/* City ticker */}
-      <div className="ticker" aria-hidden="true">
-        <div className="ticker-track">
-          {[0, 1].map((k) => (
-            <span key={k}>
-              {cityList.map((c) => (
-                <span key={c.code} className="tk">{names[c.code]}<i>{c.code}</i></span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Destinations */}
-      <section id="destinations" className="section dest-section" aria-labelledby="dest-title">
-        <div className="wrap">
-          <div className="head-row reveal">
-            <div className="head">
-              <span className="kicker">{t.routes.destinationsTitle}</span>
-              <h2 id="dest-title" className="h2">{t.routes.title}</h2>
-            </div>
-            <Link href={L("/routes")} className="link-arrow">{t.common.allRoutes} <Icon name="arrow" size={18} /></Link>
-          </div>
-        </div>
-        <div className="reveal">
-          <DestinationRail
-            prev={t.common.prev}
-            next={t.common.next}
-            items={cityList.map((c) => ({
-              code: c.code,
-              href: L(`/routes/${c.slug}`),
-              name: names[c.code],
-              tagline: t.cities[c.code].tagline,
-              state: t.cities[c.code].state,
-            }))}
-          />
         </div>
       </section>
 
@@ -189,40 +170,6 @@ export default async function Home({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Experience */}
-      <section id="onboard" className="section bg-ivory experience-band" aria-labelledby="exp-title">
-        <div className="wrap">
-          <div className="head-row reveal">
-            <div className="head">
-              <span className="kicker">{h.experienceKicker}</span>
-              <h2 id="exp-title" className="h2">{h.experienceTitle}</h2>
-              <p className="lead">{h.experienceLead}</p>
-            </div>
-            <Link href={L("/experience")} className="link-arrow">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
-          </div>
-          <div className="mosaic">
-            <div className="media m-a reveal"><Img slot="cabin" sizes="(max-width: 960px) 100vw, 720px" /></div>
-            <div className="media m-b reveal"><Img slot="meal" sizes="(max-width: 960px) 100vw, 480px" /></div>
-            <div className="media m-c reveal"><Img slot="crew" sizes="(max-width: 960px) 100vw, 480px" /></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cargo */}
-      <section id="cargo" className="section cargo-band" aria-labelledby="cargo-title">
-        <div className="wrap split">
-          <div className="media r-4-3 reveal cargo-photo"><Img slot="cargo" sizes="(max-width: 960px) 100vw, 640px" /></div>
-          <div className="reveal">
-            <span className="kicker">{h.cargoKicker}</span>
-            <h2 id="cargo-title" className="h2">{h.cargoTitle}</h2>
-            <p className="lead">{h.cargoLead}</p>
-            <div className="btn-row" style={{ marginTop: 32 }}>
-              <Link href={L("/cargo")} className="btn btn-ghost">{t.common.learnMore} <Icon name="arrow" size={18} /></Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Progress */}
       <section id="progress" data-tone="dark" className="section bg-navy-3" aria-labelledby="progress-title" style={{ position: "relative", overflow: "hidden", isolation: "isolate" }}>
         <FlightLines className="flight-lines" />
@@ -233,28 +180,6 @@ export default async function Home({ params }: PageProps) {
             <p className="lead">{h.journeyLead}</p>
           </div>
           <div className="reveal"><Timeline t={t} /></div>
-        </div>
-      </section>
-
-      {/* Audiences */}
-      <section id="work-with-us" className="section" aria-labelledby="aud-title">
-        <div className="wrap">
-          <div className="head reveal" style={{ marginBottom: 40 }}>
-            <span className="kicker">{h.audienceKicker}</span>
-            <h2 id="aud-title" className="h2">{h.audienceTitle}</h2>
-          </div>
-          <ul className="rows">
-            {h.audiences.map(([title, body, cta], i) => (
-              <li key={title} className="reveal">
-                <Link href={L(audienceLinks[i])} className="row-link">
-                  <span className="num">0{i + 1}</span>
-                  <span className="row-title">{title}</span>
-                  <span className="row-body">{body}</span>
-                  <span className="row-cta">{cta} <Icon name="arrow" size={18} /></span>
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
