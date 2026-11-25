@@ -17,12 +17,12 @@ export type CityCulture = {
 
 /** Distance in km from the city, 0 meaning inside the city. Index matches `places`. */
 export const placeKm: Record<CityCode, [number, number, number]> = {
-  VTZ: [115, 0, 25],
-  VGA: [8, 0, 35],
-  HYD: [10, 0, 11],
+  VTZ: [0, 115, 25],
+  VGA: [0, 8, 35],
+  HYD: [0, 10, 11],
   GOI: [25, 30, 60],
-  BHO: [46, 45, 0],
-  PNQ: [35, 0, 65],
+  BHO: [0, 46, 45],
+  PNQ: [0, 35, 65],
 };
 
 export const motifOf: Record<CityCode, Motif> = { VTZ: "waves", VGA: "dots", HYD: "ikat", GOI: "lattice", BHO: "dots", PNQ: "ikat" };
@@ -55,8 +55,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Bongulo chicken", line: "Chicken sealed inside bamboo and slow-cooked over coals, the way it is made in the Araku hills." },
       word: { script: "నమస్కారం", roman: "Namaskaram", meaning: "Hello, said with respect" },
       places: [
+        { name: "RK Beach from Kailasagiri", line: "The bay sweeps past the Kursura submarine, seen from the hill above." },
         { name: "Araku Valley", line: "Coffee estates in the clouds, with the Borra Caves on the way up." },
-        { name: "Kailasagiri", line: "A hilltop park with the whole bay below you." },
         { name: "Bheemunipatnam", line: "A quiet Dutch-era beach town where the Gosthani meets the sea." },
       ],
     },
@@ -65,8 +65,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Andhra bhojanam", line: "Rice, pappu, ghee and fiery gongura pachadi on a banana leaf. Come hungry." },
       word: { script: "బాగున్నారా?", roman: "Baagunnaaraa?", meaning: "How are you?" },
       places: [
+        { name: "Kanaka Durga Temple", line: "On Indrakeeladri hill, above the Krishna and the Prakasam Barrage." },
         { name: "Undavalli Caves", line: "Rock-cut caves from the 4th to 7th century, with a giant reclining Vishnu." },
-        { name: "Kanaka Durga Temple", line: "On Indrakeeladri hill, looking over the Krishna." },
         { name: "Amaravati", line: "The ancient Buddhist stupa site at the heart of the new capital region." },
       ],
     },
@@ -75,8 +75,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Dum biryani", line: "Slow-cooked under a sealed lid, then Irani chai and Osmania biscuits to finish." },
       word: { script: "آداب", roman: "Aadaab", meaning: "A courteous hello from the city of the Nizams" },
       places: [
+        { name: "Charminar", line: "The 1591 monument, with bangles, pearls and attar in Laad Bazaar around it." },
         { name: "Qutb Shahi Tombs", line: "The domed tombs of the Golconda kings, beautifully restored." },
-        { name: "Charminar and Laad Bazaar", line: "Bangles, pearls and attar in the lanes around the 1591 monument." },
         { name: "Golconda Fort", line: "Climb to the top for the view, stay for the sound and light show." },
       ],
     },
@@ -85,7 +85,7 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Xitt kodi", line: "Rice with coconut fish curry, the everyday Goan lunch. Bebinca after." },
       word: { script: "देव बरें करूं", roman: "Dev borem korum", meaning: "Thank you, in Konkani" },
       places: [
-        { name: "Fontainhas", line: "Panaji's Latin quarter of painted houses, tiled lanes and bakeries." },
+        { name: "Church of Our Lady of the Immaculate Conception, Panaji", line: "The white 1619 church above its zigzag stairs, at the edge of Fontainhas." },
         { name: "Old Goa", line: "Bom Jesus and the Se Cathedral, a UNESCO World Heritage site." },
         { name: "Dudhsagar Falls", line: "A four-tier waterfall on the Western Ghats, at its best after the monsoon." },
       ],
@@ -95,9 +95,9 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Poha and jalebi", line: "The Bhopali breakfast. By night, kebabs and korma in the old city." },
       word: { script: "राम राम", roman: "Raam Raam", meaning: "The everyday hello across Madhya Pradesh" },
       places: [
+        { name: "Taj-ul-Masajid", line: "One of Asia's largest mosques: a pink facade, white domes and a vast courtyard." },
         { name: "Sanchi Stupa", line: "The Great Stupa from the 3rd century BCE, a UNESCO World Heritage site." },
         { name: "Bhimbetka", line: "Rock shelters with paintings more than 10,000 years old." },
-        { name: "Upper Lake", line: "Sunset on the 11th-century Bhojtal, the lake the city grew around." },
       ],
     },
     PNQ: {
@@ -105,8 +105,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "Misal pav", line: "Sprouted moth curry under a spicy tarri, farsan for crunch and soft pav. Pune takes it seriously." },
       word: { script: "काय म्हणता?", roman: "Kaay mhanta?", meaning: "Marathi for \"how's it going?\"" },
       places: [
-        { name: "Sinhagad Fort", line: "A Maratha hill fort, best on a monsoon morning with pithla bhakri at the top." },
         { name: "Shaniwar Wada", line: "The 1732 Peshwa palace at the heart of the old peths." },
+        { name: "Sinhagad Fort", line: "A Maratha hill fort, best on a monsoon morning with pithla bhakri at the top." },
         { name: "Lonavala", line: "Ghats, waterfalls and chikki, an easy drive away." },
       ],
     },
@@ -117,8 +117,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "బొంగులో చికెన్", line: "వెదురు బొంగులో పెట్టి నిప్పుల మీద నెమ్మదిగా ఉడికించే అరకు ప్రత్యేక వంటకం." },
       word: { script: "నమస్కారం", roman: "Namaskaram", meaning: "గౌరవంగా పలకరింపు" },
       places: [
+        { name: "కైలాసగిరి నుంచి ఆర్కే బీచ్", line: "కొండపై నుంచి కురుసుర జలాంతర్గామి దాకా విస్తరించిన సముద్ర తీరం." },
         { name: "అరకు లోయ", line: "మబ్బుల్లో కాఫీ తోటలు, దారిలో బొర్రా గుహలు." },
-        { name: "కైలాసగిరి", line: "కింద విశాలమైన సముద్ర తీరం కనిపించే కొండపై పార్క్." },
         { name: "భీమునిపట్నం", line: "గోస్తనీ నది సముద్రంలో కలిసే ప్రశాంతమైన డచ్ కాలపు తీర పట్టణం." },
       ],
     },
@@ -127,8 +127,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "ఆంధ్ర భోజనం", line: "అరిటాకులో అన్నం, పప్పు, నెయ్యి, ఘాటైన గోంగూర పచ్చడి. ఆకలితో రండి." },
       word: { script: "బాగున్నారా?", roman: "Baagunnaaraa?", meaning: "ఎలా ఉన్నారు?" },
       places: [
+        { name: "కనకదుర్గ ఆలయం", line: "ఇంద్రకీలాద్రిపై, కృష్ణా నది, ప్రకాశం బ్యారేజీని చూస్తూ." },
         { name: "ఉండవల్లి గుహలు", line: "4వ నుంచి 7వ శతాబ్దపు రాతి గుహలు, భారీ శయన విష్ణువు." },
-        { name: "కనకదుర్గ ఆలయం", line: "కృష్ణా నదిని చూస్తూ ఇంద్రకీలాద్రిపై." },
         { name: "అమరావతి", line: "కొత్త రాజధాని ప్రాంతం నడిబొడ్డున పురాతన బౌద్ధ స్తూపం." },
       ],
     },
@@ -137,8 +137,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "దమ్ బిర్యానీ", line: "మూత బిగించి నెమ్మదిగా ఉడికించిన బిర్యానీ, ఆ తర్వాత ఇరానీ చాయ్, ఉస్మానియా బిస్కెట్లు." },
       word: { script: "آداب", roman: "Aadaab", meaning: "నిజాముల నగరం నుంచి మర్యాదపూర్వక పలకరింపు" },
       places: [
+        { name: "చార్మినార్", line: "1591 నాటి కట్టడం, చుట్టూ లాడ్ బజార్‌లో గాజులు, ముత్యాలు, అత్తరు." },
         { name: "కుతుబ్ షాహీ సమాధులు", line: "గోల్కొండ రాజుల గుమ్మటాల సమాధులు, అందంగా పునరుద్ధరించారు." },
-        { name: "చార్మినార్, లాడ్ బజార్", line: "1591 నాటి కట్టడం చుట్టూ గాజులు, ముత్యాలు, అత్తరు." },
         { name: "గోల్కొండ కోట", line: "దృశ్యం కోసం పైకి ఎక్కండి, సౌండ్ అండ్ లైట్ షో కోసం ఉండండి." },
       ],
     },
@@ -147,7 +147,7 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "షిత్ కోడీ", line: "అన్నం, కొబ్బరి చేపల కూర, గోవా రోజువారీ భోజనం. తర్వాత బెబింకా." },
       word: { script: "देव बरें करूं", roman: "Dev borem korum", meaning: "కొంకణిలో ధన్యవాదాలు" },
       places: [
-        { name: "ఫొంటైన్‌హాస్", line: "రంగుల ఇళ్లు, టైల్స్ వీధులు, బేకరీలతో పణజీ లాటిన్ క్వార్టర్." },
+        { name: "ఇమ్మాక్యులేట్ కాన్సెప్షన్ చర్చి, పణజీ", line: "జిగ్‌జాగ్ మెట్లపై తెల్లని 1619 నాటి చర్చి, ఫొంటైన్‌హాస్ అంచున." },
         { name: "ఓల్డ్ గోవా", line: "బోమ్ జీసస్, సే కేథడ్రల్, యునెస్కో వారసత్వ ప్రదేశం." },
         { name: "దూధ్‌సాగర్ జలపాతం", line: "పశ్చిమ కనుమల్లో నాలుగు అంచెల జలపాతం, వర్షాకాలం తర్వాత అద్భుతం." },
       ],
@@ -157,9 +157,9 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "పోహా, జిలేబీ", line: "భోపాల్ అల్పాహారం. రాత్రి పాత నగరంలో కబాబ్‌లు, కోర్మా." },
       word: { script: "राम राम", roman: "Raam Raam", meaning: "మధ్యప్రదేశ్ అంతటా రోజువారీ పలకరింపు" },
       places: [
+        { name: "తాజ్-ఉల్-మసాజిద్", line: "ఆసియాలోని అతిపెద్ద మసీదుల్లో ఒకటి: గులాబీ ముఖద్వారం, తెల్లని గుమ్మటాలు, విశాలమైన ప్రాంగణం." },
         { name: "సాంచీ స్తూపం", line: "క్రీ.పూ. 3వ శతాబ్దపు మహా స్తూపం, యునెస్కో వారసత్వ ప్రదేశం." },
         { name: "భీమ్‌బేట్కా", line: "10,000 ఏళ్లకు పైబడిన చిత్రాలున్న రాతి ఆశ్రయాలు." },
-        { name: "అప్పర్ లేక్", line: "నగరం చుట్టూ పెరిగిన 11వ శతాబ్దపు భోజ్‌తాల్‌పై సూర్యాస్తమయం." },
       ],
     },
     PNQ: {
@@ -167,8 +167,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "మిసల్ పావ్", line: "మొలకెత్తిన గింజల కూర, ఘాటైన తర్రీ, కరకరలాడే ఫర్సాణ్, మెత్తని పావ్." },
       word: { script: "काय म्हणता?", roman: "Kaay mhanta?", meaning: "మరాఠీలో ఎలా ఉన్నారు?" },
       places: [
-        { name: "సింహగడ్ కోట", line: "మరాఠా కొండ కోట, వర్షాకాలపు ఉదయం పిఠ్లా భాకరీతో అద్భుతం." },
         { name: "శనివార్ వాడా", line: "పాత పేఠ్‌ల నడిబొడ్డున 1732 నాటి పీష్వాల రాజభవనం." },
+        { name: "సింహగడ్ కోట", line: "మరాఠా కొండ కోట, వర్షాకాలపు ఉదయం పిఠ్లా భాకరీతో అద్భుతం." },
         { name: "లోనావాలా", line: "కనుమలు, జలపాతాలు, చిక్కీ, సులువైన ప్రయాణం." },
       ],
     },
@@ -179,8 +179,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "बोंगुलो चिकन", line: "बाँस में बंद करके अंगारों पर धीरे-धीरे पकाया गया चिकन, अराकू की पहाड़ियों का अंदाज़।" },
       word: { script: "నమస్కారం", roman: "Namaskaram", meaning: "तेलुगु में आदर भरा नमस्ते" },
       places: [
+        { name: "कैलासगिरि से आरके बीच", line: "पहाड़ी से दिखती खाड़ी, कुरसुरा पनडुब्बी तक फैला तट।" },
         { name: "अराकू घाटी", line: "बादलों में कॉफ़ी बागान, रास्ते में बोर्रा गुफाएँ।" },
-        { name: "कैलासगिरि", line: "पहाड़ी पर पार्क, नीचे पूरी खाड़ी।" },
         { name: "भीमुनिपट्नम", line: "डच दौर का शांत तटीय कस्बा, जहाँ गोस्तनी नदी समुद्र से मिलती है।" },
       ],
     },
@@ -189,8 +189,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "आंध्र भोजनम", line: "केले के पत्ते पर चावल, पप्पु, घी और तीखी गोंगुरा चटनी। भूख लेकर आइए।" },
       word: { script: "బాగున్నారా?", roman: "Baagunnaaraa?", meaning: "तेलुगु में, आप कैसे हैं?" },
       places: [
+        { name: "कनक दुर्गा मंदिर", line: "इंद्रकीलाद्री पहाड़ी पर, कृष्णा नदी और प्रकाशम बैराज को निहारता।" },
         { name: "उंडवल्ली गुफाएँ", line: "चौथी से सातवीं सदी की चट्टानों में कटी गुफाएँ, विशाल शयन विष्णु के साथ।" },
-        { name: "कनक दुर्गा मंदिर", line: "इंद्रकीलाद्री पहाड़ी पर, कृष्णा नदी को निहारता।" },
         { name: "अमरावती", line: "नई राजधानी क्षेत्र के बीच प्राचीन बौद्ध स्तूप।" },
       ],
     },
@@ -199,8 +199,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "दम बिरयानी", line: "ढक्कन बंद करके धीमी आँच पर पकी बिरयानी, फिर ईरानी चाय और उस्मानिया बिस्कुट।" },
       word: { script: "آداب", roman: "Aadaab", meaning: "निज़ामों के शहर का तहज़ीब भरा सलाम" },
       places: [
+        { name: "चारमीनार", line: "1591 की इमारत, आसपास लाड बाज़ार में चूड़ियाँ, मोती और इत्र।" },
         { name: "क़ुतुब शाही मक़बरे", line: "गोलकोंडा के बादशाहों के गुंबददार मक़बरे, ख़ूबसूरती से सँवारे गए।" },
-        { name: "चारमीनार और लाड बाज़ार", line: "1591 की इमारत के आसपास चूड़ियाँ, मोती और इत्र।" },
         { name: "गोलकोंडा क़िला", line: "नज़ारे के लिए ऊपर चढ़ें, लाइट एंड साउंड शो के लिए रुकें।" },
       ],
     },
@@ -209,7 +209,7 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "शित कोडी", line: "चावल और नारियल वाली मछली करी, गोवा का रोज़ का भोजन। फिर बेबिंका।" },
       word: { script: "देव बरें करूं", roman: "Dev borem korum", meaning: "कोंकणी में धन्यवाद" },
       places: [
-        { name: "फ़ोंटेनहास", line: "पणजी का लैटिन क्वार्टर, रंगीन घर, टाइलों वाली गलियाँ और बेकरी।" },
+        { name: "इमैक्युलेट कॉन्सेप्शन चर्च, पणजी", line: "टेढ़ी-मेढ़ी सीढ़ियों के ऊपर 1619 का सफ़ेद चर्च, फ़ोंटेनहास के किनारे।" },
         { name: "पुराना गोवा", line: "बॉम जीसस और से कैथेड्रल, यूनेस्को विश्व धरोहर।" },
         { name: "दूधसागर जलप्रपात", line: "पश्चिमी घाट में चार स्तरों वाला झरना, मानसून के बाद सबसे सुंदर।" },
       ],
@@ -219,9 +219,9 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "पोहा-जलेबी", line: "भोपाल का नाश्ता। रात में पुराने शहर के कबाब और कोरमा।" },
       word: { script: "राम राम", roman: "Raam Raam", meaning: "पूरे मध्य प्रदेश का रोज़ का अभिवादन" },
       places: [
+        { name: "ताज-उल-मसाजिद", line: "एशिया की सबसे बड़ी मस्जिदों में से एक: गुलाबी अग्रभाग, सफ़ेद गुंबद और विशाल आँगन।" },
         { name: "साँची स्तूप", line: "ईसा पूर्व तीसरी सदी का महान स्तूप, यूनेस्को विश्व धरोहर।" },
         { name: "भीमबेटका", line: "10,000 साल से भी पुराने चित्रों वाले शैलाश्रय।" },
-        { name: "बड़ा तालाब", line: "ग्यारहवीं सदी के भोजताल पर सूर्यास्त, जिसके चारों ओर शहर बसा।" },
       ],
     },
     PNQ: {
@@ -229,8 +229,8 @@ export const culture: Record<Locale, Record<CityCode, CityCulture>> = {
       food: { name: "मिसल पाव", line: "अंकुरित मोठ की करी, तीखी तर्री, कुरकुरा फरसाण और नरम पाव। पुणे इसे गंभीरता से लेता है।" },
       word: { script: "काय म्हणता?", roman: "Kaay mhanta?", meaning: "मराठी में, क्या हाल है?" },
       places: [
-        { name: "सिंहगढ़ क़िला", line: "मराठा पहाड़ी क़िला, मानसून की सुबह ऊपर पिठला भाकरी के साथ।" },
         { name: "शनिवार वाड़ा", line: "पुराने पेठों के बीच 1732 का पेशवा महल।" },
+        { name: "सिंहगढ़ क़िला", line: "मराठा पहाड़ी क़िला, मानसून की सुबह ऊपर पिठला भाकरी के साथ।" },
         { name: "लोनावला", line: "घाट, झरने और चिक्की, आसान ड्राइव पर।" },
       ],
     },
