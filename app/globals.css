@@ -794,7 +794,8 @@ html[lang^="te"] .manifesto-values li, html[lang^="hi"] .manifesto-values li { l
 .cinema-media { position: absolute; inset: 0; z-index: -2; }
 .cinema-media img { width: 100%; height: 100%; object-fit: cover; }
 .cinema::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(6, 12, 38, 0.95) 0%, rgba(6, 12, 38, 0.55) 38%, rgba(6, 12, 38, 0.05) 70%), linear-gradient(90deg, rgba(6, 12, 38, 0.55), transparent 60%); }
-.cinema-copy { width: 100%; padding-block: 120px clamp(56px, 7vw, 96px); display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: end; }
+.cinema-copy { width: 100%; padding-block: 120px clamp(56px, 7vw, 96px); display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: end; }
+.cinema-copy .display-lg { font-size: clamp(40px, 4.8vw, 72px); }
 .cinema-copy .lead { color: #d7dbef; }
 .cinema-specs { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(247, 242, 232, 0.22); }
 .cinema-specs > div { padding: 22px 18px 0; border-left: 1px solid rgba(247, 242, 232, 0.16); }
