@@ -323,6 +323,7 @@ const en = {
     kicker: "Our fleet",
     title: "The ATR 72-600.",
     lead: "The world's best-selling regional turboprop, and the right aircraft for the short, busy routes between India's growing cities.",
+    sheet: { plan: "Plan view", length: "Length", span: "Wingspan", height: "Height" },
     specsTitle: "At a glance",
     specs: {
       seats: "Seats, 2-2 layout",

@@ -1399,3 +1399,89 @@ html[lang^="te"] .ci-name, html[lang^="hi"] .ci-name { line-height: 1.4; letter-
   }
   .bg-ivory, .dest-section { --sbg: var(--ivory); }
 }
+
+/* ---------- Fleet spec sheet (blueprint) ---------- */
+.sheet-sec {
+  --bp: rgba(247, 242, 232, 0.82);
+  --bp-dim: rgba(247, 242, 232, 0.38);
+  background-color: var(--navy-3);
+  background-image:
+    radial-gradient(ellipse 70% 60% at 50% 55%, rgba(27, 46, 115, 0.9), transparent 75%),
+    linear-gradient(rgba(247, 242, 232, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 242, 232, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(247, 242, 232, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 242, 232, 0.025) 1px, transparent 1px);
+  background-size: auto, 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  background-position: center;
+  color: var(--ivory);
+  position: relative;
+  overflow: hidden;
+}
+.sheet-sec .kicker { color: var(--gold); }
+.sheet-sec .h2 { color: var(--white); }
+.sheet-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid rgba(247, 242, 232, 0.16); }
+.sheet-dims { display: flex; margin: 0; border: 1px solid rgba(247, 242, 232, 0.2); border-radius: 6px; }
+.sheet-dims > div { padding: 12px 22px; }
+.sheet-dims > div + div { border-left: 1px solid rgba(247, 242, 232, 0.2); }
+.sheet-dims dt { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(247, 242, 232, 0.6); }
+.sheet-dims dd { margin: 4px 0 0; font-family: var(--font-display); font-size: 22px; color: var(--white); }
+
+.sheet { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.9fr) minmax(0, 0.85fr); align-items: center; gap: clamp(16px, 3vw, 48px); margin-top: clamp(28px, 4vw, 56px); }
+.sheet-col { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(28px, 4.5vw, 64px); }
+.sc { position: relative; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: baseline; opacity: 0; transform: translateY(10px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: calc(0.9s + var(--i) * 0.12s); }
+.sheet.in .sc { opacity: 1; transform: none; }
+.sc-n { grid-row: span 2; align-self: start; margin-top: 10px; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--saffron); border-radius: 50%; font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+.sc b { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 2.5vw, 40px); line-height: 1.1; color: var(--white); white-space: nowrap; }
+.sc-l { margin-top: 6px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247, 242, 232, 0.66); }
+.sc-lead { position: absolute; top: 25px; height: 1px; width: clamp(16px, 3vw, 48px); background: linear-gradient(90deg, var(--saffron), rgba(232, 134, 42, 0)); }
+.sheet-col.l .sc { text-align: right; grid-template-columns: 1fr auto; }
+.sheet-col.l .sc-n { grid-column: 2; grid-row: 1 / span 2; }
+.sheet-col.l .sc b, .sheet-col.l .sc-l { grid-column: 1; }
+.sheet-col.l .sc-lead { left: 100%; margin-left: 6px; }
+.sheet-col.r .sc-lead { right: 100%; margin-right: 6px; transform: scaleX(-1); }
+
+.sheet-plane { margin: 0; position: relative; }
+.sheet-plane svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sheet-plane .draw { fill: none; stroke: var(--bp); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sheet-plane .draw.thin { stroke-width: 0.9; stroke: var(--bp-dim); }
+.sheet.in .draw { animation: bp-draw 2.2s var(--ease) forwards; }
+.sheet.in .bp-air .draw { animation-delay: 0.15s; }
+.sheet.in .bp-dim .draw { animation-delay: 0.9s; animation-duration: 1.2s; }
+@keyframes bp-draw { to { stroke-dashoffset: 0; } }
+.bp-grid line { stroke: rgba(247, 242, 232, 0.14); stroke-width: 1; stroke-dasharray: 6 6; }
+.bp-dim .draw { stroke: var(--saffron); stroke-width: 1; }
+.bp-dim text { font-size: 13px; letter-spacing: 0.12em; fill: var(--gold); font-family: var(--font-body); text-transform: uppercase; opacity: 0; transition: opacity 0.8s 1.6s; }
+.sheet.in .bp-dim text { opacity: 1; }
+.bp-disc { fill: none; stroke: var(--bp-dim); stroke-dasharray: 3 4; opacity: 0; transition: opacity 0.8s 1.4s; }
+.bp-hub { fill: var(--saffron); opacity: 0; transition: opacity 0.6s 1.4s; }
+.sheet.in .bp-disc, .sheet.in .bp-hub { opacity: 1; }
+.bp-seats rect { fill: rgba(247, 242, 232, 0.5); opacity: 0; transition: opacity 0.5s; transition-delay: calc(1.1s + var(--r) * 0.04s); }
+.sheet.in .bp-seats rect { opacity: 1; }
+.bp-pin { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.6); transition: opacity 0.5s, transform 0.6s var(--ease); transition-delay: calc(0.9s + var(--i) * 0.12s); }
+.sheet.in .bp-pin { opacity: 1; transform: none; }
+.bp-pin .ring { fill: var(--navy-3); stroke: var(--saffron); stroke-width: 1.4; }
+.bp-pin text { font-size: 12px; font-weight: 600; fill: var(--gold); font-family: var(--font-body); }
+.sheet-tag { display: flex; justify-content: center; gap: 0; margin-top: 10px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(247, 242, 232, 0.55); }
+.sheet-tag span { padding: 0 14px; }
+.sheet-tag span + span { border-left: 1px solid rgba(247, 242, 232, 0.2); }
+.sheet-fine { margin-top: clamp(28px, 4vw, 48px); color: rgba(247, 242, 232, 0.55); text-align: center; }
+
+@media (max-width: 960px) {
+  .sheet { grid-template-columns: 1fr 1fr; }
+  .sheet-plane { grid-column: 1 / -1; grid-row: 1; max-width: 520px; width: 100%; justify-self: center; }
+  .sheet-col.l .sc { text-align: left; grid-template-columns: auto 1fr; }
+  .sheet-col.l .sc-n { grid-column: 1; }
+  .sheet-col.l .sc b, .sheet-col.l .sc-l { grid-column: 2; }
+  .sc-lead { display: none; }
+  .sheet-col { gap: 28px; }
+}
+@media (max-width: 560px) {
+  .sheet-dims { width: 100%; }
+  .sheet-dims > div { flex: 1; padding: 10px 12px; }
+  .sheet-dims dd { font-size: 18px; }
+  .sc b { font-size: clamp(20px, 6vw, 26px); }
+  .sc-l { font-size: 11.5px; }
+  .sheet { column-gap: 16px; }
+  .sheet-tag { font-size: 9.5px; }
+  .sheet-tag span { padding: 0 8px; }
+}

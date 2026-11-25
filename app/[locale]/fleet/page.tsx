@@ -1,10 +1,10 @@
 import { resolve, type PageProps } from "@/lib/page";
 import { pageMeta } from "@/lib/seo";
 import { isLocale } from "@/lib/i18n";
-import { fleetSpecs, phases } from "@/lib/data";
+import { phases } from "@/lib/data";
 import { PageHero } from "@/components/PageHero";
 import { SeatMap } from "@/components/SeatMap";
-import { Img } from "@/components/Img";
+import { SpecSheet } from "@/components/SpecSheet";
 import { Icon, type IconName } from "@/components/Icon";
 
 export async function generateMetadata({ params }: PageProps) {
@@ -21,24 +21,7 @@ export default async function Fleet({ params }: PageProps) {
     <>
       <PageHero kicker={f.kicker} title={f.title} lead={f.lead} image="fleet" />
 
-      <section className="section">
-        <div className="wrap split">
-          <div className="reveal">
-            <span className="kicker">ATR 72-600</span>
-            <h2 className="h2">{f.specsTitle}</h2>
-            <div className="specs" style={{ marginTop: 32 }}>
-              {fleetSpecs.map((s) => (
-                <div key={s.key}>
-                  <b className="tnum" data-count={s.key === "engines" ? undefined : ""}>{s.value}</b>
-                  <span>{f.specs[s.key]}</span>
-                </div>
-              ))}
-            </div>
-            <p className="fine" style={{ marginTop: 18 }}>{f.fine}</p>
-          </div>
-          <div className="media r-3-2 reveal"><Img slot="cabin" sizes="(max-width: 960px) 100vw, 560px" /></div>
-        </div>
-      </section>
+      <SpecSheet title={f.specsTitle} labels={f.specs} sheet={f.sheet} fine={f.fine} />
 
       <section className="section bg-ivory" aria-labelledby="seat-title">
         <div className="wrap">
